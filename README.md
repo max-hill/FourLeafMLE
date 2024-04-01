@@ -1,5 +1,6 @@
 # Maximum likelihood estimation for quartets under the CFN model
 
+## Quartet method motivation
 Quartet methods are a canonical method 
 
 ## four_leaf_mle
