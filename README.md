@@ -15,23 +15,36 @@ It also returns the branch lengths.
 ## Showcase: our method is fast and/or our method can handle LBA
 
 ### Speed
-Consider a phylogenetic tree with 16 leaves. There are 1820 quartets in this tree. If it takes on average one minute to estimate the parameters for a single quartet, then it would take over 30 hours to estimate all of the quartets. This gives us a scale of the importance of being able to estimate a quartet quickly. In the following experiment we demonstrate the speed of our method. 
+Consider a phylogenetic tree with 16 leaves. There are 1820 quartets in this tree. If it takes on average one minute to estimate the parameters for a single quartet, then it would take over 30 hours to estimate all of the quartets. This gives us a scale of the importance of being able to estimate a quartet quickly. 
+
+In the following experiment we demonstrate the speed of our method. The biggest takeaway is that our method is able to compute the MLE of a quartet in a sixth of a second on average. 
+
+For generic data, 
+
+we ran the software 1000 times and found the average time solve, min and max times and/or quartiles:
+
+For sparse data, 
+
+we ran the software 1000 times and found the average time solve, min and max times and/or quartiles:
+
+Open question: characterize the data discriminants and log Voronoi cells
 
 ### Global optimization 
 For large trees it is infeasible to consider the MLEs of all the quartests at once. Instead, practicioners initialize all of the parameters of the tree. Next, they run the EM algorithm to compute a local maximum by only updating one quartet at a time. If the EM algorithm converges to a suboptimal local max, then this can lead to slow downs in reconstructing the large tree. Instead of relying a local method to compute the MLE, we use algebraic methods to find the global optimum when estimating a quartet. This implementation can be viewed as a black box solver for *any* phylogenetic reconsutruction method using quartets.  
 ### Long branch attraction
 p-values for model selection 
 
-## Felsenstein zone plot 
+## Felsenstein zone and the geometry of data 
 Our implementation leads to conjectures on the geometry of phylogenetic data. There should be some algebraic curves that cut out the boundaries. 
-
-## Test functions
-We have several test functions to ensure correctness of the method
 
 ## Model stratification and ML degrees: The function compute_RX_MLE functions for case analysis
 This problem breaks down to computing MLE's for ten different subcases. (This is in contrast to the binary latent class model with only a single latent variable (represented by the internal node) which has many many more subcases; the boundary stratification is very very different from this CFN case with two internal nodes)
 The first two cases are solved using homotopy continuation. 
 The other eight can be solved using formulas.
+
+
+### Test functions
+We have several test functions to ensure correctness of the method 
 
 
 
