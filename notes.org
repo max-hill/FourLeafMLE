@@ -4,11 +4,27 @@ according to Rhodes and Zwiernick's latent class model paper. We can verify whet
 * make a felsenstein zone picture
 * finish adding likelihoods
 * carefully check the parts of the program
-* make a final MLE function
 * turn it into a module
 * Tiebreaking
 - report if tiebreaking results in different Felsenstein plots
-  
-* TODO
-- [ ] Add functionality to test branch length consistency for all submodels
-- [ ] 
+- does your solution result in a problem?! You may be throwing out non-unique MLEs. Does Steel or Chor have a full
+  characterization of when the MLE is not unique?  No.
+   
+* TODO List
+  - [ ] Add functionality to test branch length consistency for all submodels - including zero-branch
+  - [ ] Fix error when model is a dirac distribution
+  - [X] Protype felsenstein plots
+  - [X] Protype felsenstein plots with distances
+  - [ ] Test Chor's examples
+  - [ ] Determine if it's known when the maximum likelihood point is not unique
+    - It's not known for unrooted trees, but Chor has a paper investigating this.
+    - Known for rooted ultrametric trees to be unique
+  - [ ] Test the lattice conjecture (how?)
+  - [ ] Write a literature review for quartet methods (occupy a special place in phylogenetic inference)
+  - [ ] Likelihood ratio test
+  - [ ] Test on real data
+  - [ ] Compare to IQtree
+  - [ ] Standardize outputs of all MLE functions
+  - [ ] Are boundary cases ever inferred?
+  - [ ] Make into package
+  - [ ] roundingMLE? 

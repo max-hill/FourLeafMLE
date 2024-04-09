@@ -171,13 +171,13 @@ function MLEforFBM(SITE_PATTERN_DATA,τ)
         if (τ ∈ 1:3) && any(≥(1-1000000*eps()),θ)
             return [-911111111111111,[θ],[],[],[]]
         else
-            return [logL,θ,[τ],"R1: binary quartet with topology τ=$τ"]
+            return [logL,θ,[τ],"R1", "binary quartet with topology τ=$τ"]
         end
     elseif τ == 4
         if any(≥(1-1000000*eps()),θ[1:4])
             return [-911111111111111,[θ],[],[],[]]
         else
-            return [logL,θ,[1,2,3],"R2: star quartet"]
+            return [logL,θ,[1,2,3],"R2", "star quartet"]
         end
     end
 end

@@ -61,7 +61,7 @@ function compute_R3_MLE(SITE_PATTERN_DATA)
                 end
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,τ))
                 maximizer = [logL, [B_ij, sqrt(B_jk*B_jl/B_kl), sqrt(B_jk*B_kl/B_jl), sqrt(B_jl*B_kl/B_jk)],
-                             [τ], "θ$i,θ_internal,θ$k,θ$l", labels, "R3: $i -- $j --< $k, $l"]
+                             [τ], "θ$i,θ_internal,θ$k,θ$l", labels, "R3", "$i -- $j --< $k, $l"]
                 push!(R3_output,maximizer)
             end
         end
@@ -91,7 +91,7 @@ function compute_R4_MLE(SITE_PATTERN_DATA)
             θ[l]=B_il
             if all(<(1-100000*eps()),[θ[j],θ[k],θ[l]])
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,1))
-                maximizer = [logL, [B_ij, B_ik, B_il], [1,2,3], "θ$j,θ$k,θ$l", labels, "R4: $j $k $l tripod with internal node $i"]
+                maximizer = [logL, [B_ij, B_ik, B_il], [1,2,3], "θ$j,θ$k,θ$l", labels, "R4", "$j $k $l tripod with internal node $i"]
                 # The maximizer is (θ_j,θ_k,θ_l) = (B_ij,B_ik,B_il), provided that these are all in (0,1)
                 push!(R4_output,maximizer)
             end
@@ -127,7 +127,7 @@ function compute_R5_MLE(SITE_PATTERN_DATA)
                 end
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,τ))
                 maximizer = [logL, [B_ij, B_jk, B_kl], [τ], "θ$i,"*θ_index_pair(j,k)*",θ$l",
-                             labels, "R5: $i--$j--$k--$l"]
+                             labels, "R5", "$i--$j--$k--$l"]
                 # The maximizer is (θ_j,θ_ik,θ_l) = (B_ij,B_ik,B_kl), provided that these are all in (0,1)
                 push!(R5_output,maximizer)
             end
@@ -152,7 +152,7 @@ function compute_R6_MLE(SITE_PATTERN_DATA)
             θ[l] = sqrt(B_jl*B_kl/B_jk)
             if all(<(1-100000*eps()),[θ[j],θ[k],θ[l]])
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,1))
-                maximizer=[logL, [θ[j], θ[k], θ[l]], [1,2,3], "θ$j, θ$k, θ$l", labels, "R6: leaf $i infinitely far"]
+                maximizer=[logL, [θ[j], θ[k], θ[l]], [1,2,3], "θ$j, θ$k, θ$l", labels, "R6", "leaf $i infinitely far"]
                 push!(R6_output, maximizer)
             end
         end
@@ -180,7 +180,7 @@ function compute_R7_MLE(SITE_PATTERN_DATA)
             if all(<(1-100000*eps()),[θ[k],θ[l]])
                 logL= SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,1))
                 maximizer = [logL, [B_jk,B_jl], [1,2,3], θ_index_pair(j,k)*","*θ_index_pair(j,l),
-                             labels, "R7: leaf $i infinitely far and θ$j=1"]
+                             labels, "R7", "leaf $i infinitely far and θ$j=1"]
                 push!(R7_output,maximizer)
             end
         end
@@ -213,7 +213,7 @@ function compute_R8_MLE(SITE_PATTERN_DATA)
                 end
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,τ))
                 maximizer = [logL, [B_ij, B_kl], [τ], θ_index_pair(i,j)*","*θ_index_pair(k,l),
-                             labels, "R8: $i--$j  $k--$l"]
+                             labels, "R8", "$i--$j  $k--$l"]
                 # The maximizer is (θ_ij,θ_kl) = (B_ij,B_kl), provided that these are in (0,1)
                 push!(R8_output,maximizer)
             end
@@ -238,7 +238,7 @@ function compute_R9_MLE(SITE_PATTERN_DATA)
             θ[l] = 1
             if θ[k]<1-100000*eps()
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,1))
-                maximizer = [logL, [B_kl], [1,2,3], θ_index_pair(k,l), labels, "R9: leaves $i,$j infinitely far"]
+                maximizer = [logL, [B_kl], [1,2,3], θ_index_pair(k,l), labels, "R9", "leaves $i,$j infinitely far"]
                 push!(R9_output,maximizer)
             end
         end
@@ -249,7 +249,7 @@ end
 # compute maximizers in class R10
 function compute_R10_MLE(SITE_PATTERN_DATA)
     logL = SITE_PATTERN_DATA'log.(computeProbabilityVector([0,0,0,0,0],1))
-    R10_output=[[logL, [0,0,0,0,0], [1,2,3], "θ1,θ2,θ3,θ4,θ5", "R10: all sites independent"]]
+    R10_output=[[logL, [], [1,2,3], "θ1,θ2,θ3,θ4,θ5", "R10", "all sites independent"]]
     return R10_output
 end
 
