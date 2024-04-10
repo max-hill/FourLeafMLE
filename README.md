@@ -31,6 +31,9 @@ Open question: characterize the data discriminants and log Voronoi cells
 
 ### Global optimization 
 For large trees it is infeasible to consider the MLEs of all the quartests at once. Instead, practicioners initialize all of the parameters of the tree. Next, they run the EM algorithm to compute a local maximum by only updating one quartet at a time. If the EM algorithm converges to a suboptimal local max, then this can lead to slow downs in reconstructing the large tree. Instead of relying a local method to compute the MLE, we use algebraic methods to find the global optimum when estimating a quartet. This implementation can be viewed as a black box solver for *any* phylogenetic reconsutruction method using quartets.  
+
+(move to quartet motivation section)
+
 ### Long branch attraction
 p-values for model selection 
 
