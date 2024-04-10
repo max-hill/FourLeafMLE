@@ -7,7 +7,12 @@ Quartet methods are a canonical method and hold a special place in phylogenetics
 
 For large trees it is infeasible to consider the MLEs of all the quartests at once. Instead, practicioners initialize all of the parameters of the tree. Next, they run the EM algorithm to compute a local maximum by only updating one quartet at a time. If the EM algorithm converges to a suboptimal local max, then this can lead to slow downs in reconstructing the large tree. Instead of relying a local method to compute the MLE, we use algebraic methods to find the global optimum when estimating a quartet. This implementation can be viewed as a black box solver for *any* phylogenetic reconsutruction method using quartets.  
 ## four_leaf_mle
-This is the main function.
+This is the main functionality. Given genetic site pattern data, return an estimate for the tree of life.
+
+SITE_PATTERN_DATA = [125.0, 125.0, 125.0, 125.0, 125.0, 125.0, 125.0, 126.0]
+
+function fourLeafMLE(SITE_PATTERN_DATA)
+
 It takes site pattern data as an input and returns a vector of information for the mle.
 This information include the maximum value of the log-likelihood function. 
 It also includes a tree configuration that achieves that. A todo is to make sure we aren't throwing out any trees that also achieve that. 
@@ -35,6 +40,8 @@ Open question: characterize the data discriminants and log Voronoi cells
 Our implementation leads to conjectures on the geometry of phylogenetic data. There should be some algebraic curves that cut out the boundaries. 
 
 ### Long branch attraction
+
+Long branch attraction is a well known difficulty in phylogenetic reconstruction. The algebraic methods we employ here given a possible explanation of LBA that agrees with the computational results derived from this implementation. 
 
 
 ## Model stratification and ML degrees: The function compute_RX_MLE functions for case analysis
