@@ -1,7 +1,5 @@
 θ_index_pair(i,j)=return "θ$(min(i,j))$(max(i,j))"
 
-
-
 # "Compute the model given a topology τ∈{1,2,3} (= 13|23,12|34,14|23,
 # respectively, and vector θ=[θ₁,...,θ₅] of Hadamard branch parameters. Uses
 # Formula from Semple and Steel's book on Phylogenetics. See Cor 8.6.6 on p201.
@@ -41,5 +39,4 @@ isNonnegative(x) = all(>=(0),x)
 
 "Compute the Euclidean distance between two vectors x and y."
 euclidean_distance(x,y) = sqrt(sum((x-y).^2))
-
 
