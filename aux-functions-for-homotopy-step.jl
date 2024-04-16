@@ -23,6 +23,8 @@ point is a probability measure which may or may not correspond to a tree with
 finite and positive branch lengths.
 
 """
+
+
 function compute_R1_or_R2_critical_points_with_homotopy(SITE_PATTERN_DATA,τ)
     @var p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ λ₁ λ₂ λ₃ λ₄ p λ
     @var u[1:8] # data parameters (ie want to solve when u=SITE_PATTERN_DATA)

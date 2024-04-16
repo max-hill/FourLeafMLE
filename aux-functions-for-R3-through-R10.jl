@@ -66,7 +66,7 @@ function compute_R3_MLE(SITE_PATTERN_DATA)
                 maximizer = [logL, "R3", [τ],
                              [B_ij, sqrt(B_jk*B_jl/B_kl), sqrt(B_jk*B_kl/B_jl), sqrt(B_jl*B_kl/B_jk)],
                              "θ$i,θ_internal,θ$k,θ$l",
-                             labels, "R3", "$i -- $j --< $k, $l"]
+                             labels, "$i -- $j --< $k, $l"]
                 push!(R3_output,maximizer)
             end
         end
@@ -74,7 +74,6 @@ function compute_R3_MLE(SITE_PATTERN_DATA)
     return R3_output
 end
 
-    
 ## Compute maximizers in class R4 - DONE
 # Claw tree with labeled internal node i of degree 3. Leaves are labeled by j, k, and l. There are four elements,
 # depending on the label of the internal node.
@@ -92,7 +91,10 @@ function compute_R4_MLE(SITE_PATTERN_DATA)
             θ[l]=B_il
             if all(<(1-100000*eps()),[θ[j],θ[k],θ[l]])
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,1))
-                maximizer = [logL, "R4", [1,2,3], [B_ij, B_ik, B_il],  "θ$j,θ$k,θ$l", labels, "$j $k $l tripod with internal node $i"]
+                maximizer = [logL, "R4", [1,2,3],
+                             [B_ij, B_ik, B_il],
+                             "θ$j,θ$k,θ$l",
+                             labels, "$j $k $l tripod with internal node $i"]
                 # The maximizer is (θ_j,θ_k,θ_l) = (B_ij,B_ik,B_il), provided that these are all in (0,1)
                 push!(R4_output,maximizer)
             end
@@ -185,9 +187,9 @@ function compute_R7_MLE(SITE_PATTERN_DATA)
             θ[k] = B_jk
             θ[l] = B_jl
             if all(<(1-100000*eps()),[θ[k],θ[l]])
-                logL= SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,1))
+                logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,1))
                 maximizer = [logL, "R7", [1,2,3],
-                             [B_jk,B_jl],  θ_index_pair(j,k)*","*θ_index_pair(j,l),
+                             [B_jk,B_kl],  θ_index_pair(j,k)*","*θ_index_pair(k,l),
                              labels,  "leaf $i infinitely far and θ$j=1"]
                 push!(R7_output,maximizer)
             end
@@ -195,7 +197,6 @@ function compute_R7_MLE(SITE_PATTERN_DATA)
     end
     return R7_output
 end
-
 
 
 ## Compute maximizers in class R8 - DONE
