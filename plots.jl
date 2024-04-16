@@ -262,7 +262,7 @@ end
 
 """
 
-   `make_classification_plot(sequence_length, x_values, y_values, categorical_data, marker_size; Hadamard_mode=false)'
+   `make_classification_plot(sequence_length, x_values, y_values, categorical_data; marker_size=nothing, Hadamard_mode=false)'
 
 # Description
 
@@ -275,19 +275,21 @@ Makes a plot using data obtained from the function `generate_classification_plot
 
   - `x_values, y_values, categorical_data' : the output of `generate_classification_plot_data'.
 
-  - `marker_size' : the size of the squares made by the scatter plot. Depending on the step size
-                    (which is automatically deduced from the vectors `x_values' and `y_values'),
-                    this may need to be adjusted. It should be large enough that the squares are
-                    visible and are almost or exactly adjacent, but not so large that they overlap.
-                    If `number_of_x_values = number_of_y_values = 100', then `marker_size = 1.7' works
-                    well. If the number of values is 200, then .84 works well.
+  - `marker_size' : Optional parameter. Determines the size of the squares made by the scatter plot.
+                    Depending on the step size (which is automatically deduced from the vectors
+                    `x_values' and `y_values'), this may need to be adjusted. Ideally, `marker_size'
+                    should be large enough that the squares are visible and are almost or exactly
+                    adjacent, but not so large that they overlap. If no value is supplied by the
+                    user, a sensible default will be chosen, which is 171 divided by
+                    max(number_of_x_values,number_of_y_values).
 
-  - `Hadamard_mode' : Specifes the plotting mode. If true, then `x_values' and `y_values' are
-                      interpreted as Hadamard edge parameters. If false, then they are interpreted
-                      to be branch length distances measured in expected number of mutations per
-                      site. This affects the axes and labels of the plot. In order to obtain
-                      good-looking plots, the value of this variable should be the same as the value
-                      used when generating the data (otherwise the boxes won't be evenly spaced).
+  - `Hadamard_mode' : Optional parameter. Specifes the plotting mode. If true, then `x_values' and
+                      `y_values' are interpreted as Hadamard edge parameters. If false, then they
+                      are interpreted to be branch length distances measured in expected number of
+                      mutations per site. This affects the axes and labels of the plot. In order to
+                      obtain good-looking plots, the value of this variable should be the same as
+                      the value used when generating the data (otherwise the boxes won't be evenly
+                      spaced).
 
 # Output
 
@@ -295,25 +297,29 @@ A plot like thos shown in the abstract. The plot is saved as an .svg file to
 "plots/hadamard-plot.svg".
 
 """
-function make_classification_plot(sequence_length, x_values, y_values, categorical_data, marker_size; Hadamard_mode=false)
-    default(fontfamily="Computer Modern")
-    p = plot(legend = :outertopright)
-    # Define the color gradient and legend labels
+function make_classification_plot(sequence_length, x_values, y_values, categorical_data; marker_size=nothing, Hadamard_mode=false)
+    # Determine plot bounds and step size from the data:
+    lower_x, lower_y, upper_x, upper_y = [minimum.([x_values,y_values]); maximum.([x_values,y_values])]
+    number_of_y_values, number_of_x_values= [sum([v[i] == v[1] for i in 1:length(v)]) for v in [x_values,y_values]]
+    dx, dy = (upper_x-lower_x)/number_of_x_values, (upper_y-lower_y)/number_of_y_values
+    # Attempt to pick a sensible value for marker_size if none is supplied:
+    if marker_size == nothing
+        marker_size = 171/maximum([number_of_x_values, number_of_y_values])
+    end
+    # Define the color gradient and legend labels:
     color_mapping = Dict("τ=1" => :green, "τ=2" => :red, "τ=3" => :blue, "τ=1,2" => :yellow, "τ=1,3" => :cyan,
                          "τ=2,3" => :magenta, "Any topology" => :white)
     label_mapping = Dict("τ=1" => L"\widehat{\tau}=1", "τ=2" => L"\widehat{\tau}=2", "τ=3" => L"\widehat{\tau}=3",
                          "τ=1,2" => L"\widehat{\tau}=1,2", "τ=1,3" => L"\widehat{\tau}=1,3",
                          "τ=2,3" => L"\widehat{\tau}=2,3", "Any topology" => L"\widehat{\tau} = \textrm{any}\ \textrm{topology}")
-    # Add each category to the plot separately
+    # Begin plotting each color category separately:
+    default(fontfamily="Computer Modern")
+    p = plot(legend = :outertopright)
     for category in ["τ=1", "τ=2", "τ=3", "Any topology", "τ=1,2", "τ=1,3", "τ=2,3"]
         mask = categorical_results .== category
         scatter!(p, x_values[mask], y_values[mask], c = color_mapping[category], label = label_mapping[category],
                  markershape=:square, markersize=marker_size, markerstrokewidth=0)
     end
-    # Determine plot bounds and step size from the data:
-    lower_x, lower_y, upper_x, upper_y = [minimum.([x_values,y_values]); maximum.([x_values,y_values])]
-    number_of_y_values, number_of_x_values= [sum([v[i] == v[1] for i in 1:length(v)]) for v in [x_values,y_values]]
-    dx, dy = (upper_x-lower_x)/number_of_x_values, (upper_y-lower_y)/number_of_y_values
     # Set the remaining plot attributes, depending on the type of edge parameters:
     if Hadamard_mode == true
         plot!(p, aspect_ratio=:equal, xlims=(0, 1), ylims=(0, 1),
@@ -336,27 +342,32 @@ end
 
 ## Example Hadamard Plot # 1 -- Done
 sequence_length=1000
-@time x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, .99, .99, 100, 100, Hadamard_mode=true)
-make_classification_plot(sequence_length, x_values, y_values, categorical_results, 1.7; Hadamard_mode=true);
+x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, .99, .99, 100, 100, Hadamard_mode=true)
+make_classification_plot(sequence_length, x_values, y_values, categorical_results; Hadamard_mode=true) # uses default marker size = 171/100 = 1.71.
+make_classification_plot(sequence_length, x_values, y_values, categorical_results; marker_size = 1, Hadamard_mode=true) # observe the effect of decreasing marker_size
 
 
 ## Example Hadamard Plot # 2 -- Done
 sequence_length=1000
-@time x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, .99, .99, 200, 200, Hadamard_mode=true)
-make_classification_plot(sequence_length, x_values, y_values, categorical_results, .84; Hadamard_mode=true);
+x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, .99, .99, 200, 200, Hadamard_mode=true)
+make_classification_plot(sequence_length, x_values, y_values, categorical_results, Hadamard_mode=true);
 
 
 ## Example Distance Plot # 1 -- Done
 sequence_length=1000
-@time x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, 1.5, 1.5, 100, 100, Hadamard_mode=false)
-make_classification_plot(sequence_length, x_values, y_values, categorical_results, 1.7; Hadamard_mode=false);
+x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, 1.5, 1.5, 100, 100)
+make_classification_plot(sequence_length, x_values, y_values, categorical_results)
 
 ## Example Distance Plot # 2  -- Done
 sequence_length=1000
-@time x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, 1.5, 1.5, 200, 200, Hadamard_mode=false)
-make_classification_plot(sequence_length, x_values, y_values, categorical_results, .84; Hadamard_mode=false);
+x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, 1.5, 1.5, 200, 200)
+make_classification_plot(sequence_length, x_values, y_values, categorical_results)
 
 
+## Example Distance Plot # 3
+sequence_length=1000
+@time x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, 1.5, 1.5, 300, 300)
+make_classification_plot(sequence_length, x_values, y_values, categorical_results)
 
 
 
