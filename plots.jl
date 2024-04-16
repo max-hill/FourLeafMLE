@@ -351,10 +351,10 @@ sequence_length=1000
 @time x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, 1.5, 1.5, 100, 100, Hadamard_mode=false)
 make_classification_plot(sequence_length, x_values, y_values, categorical_results, 1.7; Hadamard_mode=false);
 
-## Example Distance Plot # 2
+## Example Distance Plot # 2  -- Done
 sequence_length=1000
 @time x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, 1.5, 1.5, 200, 200, Hadamard_mode=false)
-make_classification_plot(sequence_length, x_values, y_values, categorical_results, 1.7; Hadamard_mode=false);
+make_classification_plot(sequence_length, x_values, y_values, categorical_results, .84; Hadamard_mode=false);
 
 
 
