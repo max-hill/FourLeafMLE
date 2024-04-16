@@ -112,7 +112,7 @@ function fourLeafMLE(SITE_PATTERN_DATA)
     tol=10e-9
     filter!(x -> all(i -> i >= tol, x[4]), tmp)
     # keep only the MLEs with the biggest logL:
-    maximum_logL = maximum(x[1] for x in tmp)    # shouldn't I be rounding the logL to like 10 decimal places first?
+    maximum_logL = maximum(x[1] for x in tmp) 
     tmp = [x for x in tmp if x[1] == maximum_logL] 
     return tmp
 end
