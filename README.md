@@ -15,8 +15,7 @@ common ancestors, and leaves representing extant taxa. The edge weights,
 or *branch lengths* represent some measure of evolutionary time (usually
 expected number of mutations per site), and the tree *topology*
 describes clade structure of the taxa. For instance,
-Figure [1](#fig:long-branch-attraction){reference-type="ref"
-reference="fig:long-branch-attraction"} has four leaves that are labeled
+[Figure 1](#fig1). has four leaves that are labeled
 in such a way to indicate species $1$ and $2$ have a more recent common
 ancestor with one another than with species $3$ or $4$.
 
@@ -62,8 +61,7 @@ distinguishing this software is that it implements a framework to
 characterize case when the tree estimates have infinite or zero-length
 branches. We believe this is useful in obtaining an understanding of
 ways that maximum likelihood inference can fail, and as a first step
-leads to Figure [3](#fig:the-figure){reference-type="ref"
-reference="fig:the-figure"}.
+leads to [Figure 1](#fig1).
 
 # Running the maximum likelihood estimator
 
@@ -111,47 +109,32 @@ critical points otherwise.
 Our method is fast. On a desktop machine with 12 i5-10400 CPUs
 (2.90GHz), the `fourLeafMLE` solves on average 50 global optimization
 problems per second. This is sufficiently fast to create high-quality
-visualizations of the geometry of the maximum likelihood problem. For
-example, 
+visualizations of the geometry of the maximum likelihood problem. 
 
-![Alt text](plots/classification-plot-hadamard-k1000-resolution300x300-marker0.57.png)
+For example, consider 4-leaf trees of the following form:
 
+![tree-type](plots/lba-figure.png)
 
-Figure
-[2](#fig:topology-classification-hadamard-plot){reference-type="ref"
-reference="fig:topology-classification-hadamard-plot"} presents a grid
+The following plot consists of a grid
 of $90,000$ points, each representing a choice of Hadamard edge length
 parameters $\theta_x,\theta_y$ (see [12]) for the
-tree shown in Figure
-[1](#fig:long-branch-attraction){reference-type="ref"
-reference="fig:long-branch-attraction"}. For each point, maximum
-likelihood estimation was performed using random data (1000b) drawn from
-the model, and the point colored according to which binary quartet
-topologies were found to be compatible with the maximum likelihood
-estimates.
+above tree:
+<figure>
+  <img src="plots/classification-plot-hadamard-k1000-resolution300x300-marker0.57.png" alt="grid-plot">
+<figcaption> 
+  Figure 1. MLE topologies for random data, represented by color. 
+  For each point, maximum likelihood estimation was performed using 
+  random data (1000b) drawn according to the CFN process on the tree 
+  with edge parameters corresponding to the point. The point was then 
+  colored according to which binary quartet topologies were found to 
+  be compatible with the maximum likelihood estimates. The reddish 
+  bottom right corner of the plot provides a new visualization of the
+  long-branch attractionphenomenon.
+</figcaption>
+</figure>
+<a id="fig1"></a>
 
-<figure id="fig:the-figure">
-<figure id="fig:long-branch-attraction">
 
-<figcaption>A quartet with topology <span
-class="math inline">12|34</span>. When <span
-class="math inline"><em>x</em></span> is very small and <span
-class="math inline"><em>y</em></span> is large, the maximum likelihood
-estimate tends to have topology <span class="math inline">23|14</span>,
-a bias is known as long-branch attraction.</figcaption>
-</figure>
-<figure id="fig:topology-classification-hadamard-plot">
-<img
-src="images/classification-plot-hadamard-k1000-resolution300x300-marker0.57.png" />
-<figcaption>MLE topologies for random data, represented by
-color.</figcaption>
-</figure>
-<figcaption>A visualization of 90,000 inferred tree topologies (right)
-for random data consisting of 1000bp drawn according to the CFN model on
-trees of the form given on the left. The reddish bottom right corner of
-(b) provides a new visualization of the long-branch attraction
-phenomenon.</figcaption>
-</figure>
 
 # Citations
 
