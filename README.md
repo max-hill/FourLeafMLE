@@ -58,7 +58,7 @@ event $i$ and each $p_i$ depends on the parameters $\theta$ of the
 model. The maximum likelihood problem addressed in `fourLeafMLE`
 involves estimating the branch lengths and unrooted tree topology of a
 4-leaf tree from sequence data of a fixed length $k$ generated according
-to the Cavendar-Farris-Neyman (CFN) model [@semple2003phylogenetics].
+to the Cavendar-Farris-Neyman (CFN) model [1].
 
 Considerable research has focused on understanding the properties of
 maximum likelihood estimation. Even in the simplest cases of 3- and
@@ -164,6 +164,41 @@ trees of the form given on the left. The reddish bottom right corner of
 (b) provides a new visualization of the long-branch attraction
 phenomenon.</figcaption>
 </figure>
+
+# Citations
+
+1. Allman ES, Rhodes JA. Phylogenetic invariants for the general Markov model of sequence mutation. Mathematical Biosciences. 2003;186(2):113-144. doi:10.1016/j.mbs.2003.08.004
+
+2. Bergsten J. A review of long-branch attraction. Cladistics. 2005;21(2):163-193.
+
+3. Breiding P, Timme S. HomotopyContinuation.jl: A Package for Homotopy Continuation in Julia. In: International Congress on Mathematical Software. Springer; 2018:458-465.
+
+4. Chor B, Hendy M, Penny D. Analytic solutions for three taxon ML trees with variable rates across sites. Discrete Applied Mathematics. 2007;155(6-7):750-758.
+
+5. Chor B, Hendy MD, Holland BR, Penny D. Multiple Maxima of Likelihood in Phylogenetic Trees: An Analytic Approach. Molecular Biology and Evolution. 10 2000;17(10):1529-1541. doi:10.1093/oxfordjournals.molbev.a026252
+
+6. Chor B, Snir S. Molecular clock fork phylogenies: Closed form analytic maximum likelihood solutions. Systematic Biology. 2004;53(6):963-967.
+
+7. Garcia-Puente LD, Porter J. Small Phylogenetic Trees https://www.coloradocollege.edu/aapps/ldg/small-trees/small-trees_0.html. Published online 2007.
+
+8. Hill M, Roch S, Rodriguez JI. Maximum Likelihood Estimation for Unrooted 3-Leaf Trees: An Analytic Solution for the CFN Model. bioRxiv. Published online 2024:2024-2002.
+
+9. Hobolth A, Wiuf C. Maximum likelihood estimation and natural pairwise estimating equations are identical for three sequences and a symmetric 2-state substitution model. Theoretical Population Biology. Published online 2024.
+
+10. Hoşten S, Khetan A, Sturmfels B. Solving the likelihood equations. Found Comput Math. 2005;5(4):389-407. doi:10.1007/s10208-004-0156-8
+
+11. Kosta D, Kubjas K. Maximum likelihood estimation of symmetric group-based models via numerical algebraic geometry. Bull Math Biol. 2019;81(2):337-360. doi:10.1007/s11538-018-0523-2
+
+12. Semple C, Steel M, Phylogenetics. Vol 24. Oxford University Press on Demand; 2003.
+
+13. Steel M. The Maximum Likelihood Point for a Phylogenetic Tree is not Unique. Systematic Biology. 1994;43(4):560-564. Accessed August 21, 2023. http://www.jstor.org/stable/2413552
+
+14. Susko E, Roger AJ. Long Branch Attraction Biases in Phylogenetics. Systematic Biology. 02 2021;70(4):838-843. doi:10.1093/sysbio/syab001
+
+15. Warnow T. Computational Phylogenetics: An Introduction to Designing Methods for Phylogeny Estimation. Cambridge University Press; 2017. doi:10.1017/9781316882313
+
+16. Yang Z. Complexity of the simplest phylogenetic estimation problem. Proceedings of the Royal Society of London Series B: Biological Sciences. 2000;267(1439):109-116.
+
 
 [^1]: The numbers $14$ and $92$ were computed previously in [@GGS2022
     Table 2].
