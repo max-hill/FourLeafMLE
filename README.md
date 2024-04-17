@@ -1,10 +1,12 @@
-# Short package summary:
+# Package summary:
 
   We solve a global optimization problem to perform statistical
   inference using DNA sequence alignment data for quartets under the
   Cavender-Farris-Neyman model from phylogenetics.
 
-# Introduction: tree topologies and the tree of life
+  Authors: Max Hill (UC-Riverside) and Jose Israel Rodriguez (UW-Madison)
+  
+# Background: tree topologies and the tree of life
 
 One of the core motivations in evolutionary biology is to reconstruct
 the *tree of life* that describes how species have evolved over time. A
