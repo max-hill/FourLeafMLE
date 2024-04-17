@@ -112,7 +112,12 @@ Our method is fast. On a desktop machine with 12 i5-10400 CPUs
 (2.90GHz), the `fourLeafMLE` solves on average 50 global optimization
 problems per second. This is sufficiently fast to create high-quality
 visualizations of the geometry of the maximum likelihood problem. For
-example, Figure
+example, 
+
+![Alt text](plots/classification-plot-hadamard-k1000-resolution300x300-marker0.57.png)
+
+
+Figure
 [2](#fig:topology-classification-hadamard-plot){reference-type="ref"
 reference="fig:topology-classification-hadamard-plot"} presents a grid
 of $90,000$ points, each representing a choice of Hadamard edge length
