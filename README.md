@@ -75,10 +75,13 @@ includes information about each of the maximizers, for example the tree
 configuration and optimal branch lengths.
 
 ```
-
     SITE_PATTERN_DATA = [212, 107, 98, 115, 114, 89, 102, 163]
-    fourLeafMLE(SITE_PATTERN_DATA) 
-    ## Output
+    fourLeafMLE(SITE_PATTERN_DATA)
+```
+
+which has output
+
+```
     1-element Vector{Vector{Any}}:
      [-2036.1212979788797, 
       "R1", 
@@ -86,7 +89,6 @@ configuration and optimal branch lengths.
       [0.1380874841, 0.46347429951, 0.5231552324, 0.3975875363, 0.6835395124], 
       "θ1, θ2, θ3, θ4, θ5", 
       "binary quartet with topology τ=1"]
-
 ```
 
 For complete details on the code, see the code documentation provided here, but now we
