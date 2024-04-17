@@ -131,7 +131,7 @@ above tree:
   colored according to which binary quartet topologies were found to 
   be compatible with the maximum likelihood estimates. The reddish 
   bottom right corner of the plot provides a new visualization of the
-  long-branch attractionphenomenon.
+  long-branch attraction phenomenon.
 </figcaption>
 </figure>
 <a id="fig1"></a>
