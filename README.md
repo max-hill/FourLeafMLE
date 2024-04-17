@@ -113,7 +113,7 @@ give a broad overview about our software. The CFN model is a
 parameterized semialgebraic set in $\mathbb{R}^8$ with dimension $6$. We
 optimize the likelihood function by partitioning the semialgebraic set
 according to boundaries from the parameterization, similiar to the
-approach in [@1] for a different model. There are $10$
+approach in [1] for a different model. There are $10$
 different boundaries up to symmetry. All but one of them have ML degree
 less than two. The last one has ML degree 92 while the main component of
 the semialgebraic set has ML degree fourteen.[^1] We optimize the
@@ -133,7 +133,7 @@ example, Figure
 [2](#fig:topology-classification-hadamard-plot){reference-type="ref"
 reference="fig:topology-classification-hadamard-plot"} presents a grid
 of $90,000$ points, each representing a choice of Hadamard edge length
-parameters $\theta_x,\theta_y$ (see [@semple2003phylogenetics]) for the
+parameters $\theta_x,\theta_y$ (see [12]) for the
 tree shown in Figure
 [1](#fig:long-branch-attraction){reference-type="ref"
 reference="fig:long-branch-attraction"}. For each point, maximum
