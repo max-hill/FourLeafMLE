@@ -58,27 +58,27 @@ event $i$ and each $p_i$ depends on the parameters $\theta$ of the
 model. The maximum likelihood problem addressed in `fourLeafMLE`
 involves estimating the branch lengths and unrooted tree topology of a
 4-leaf tree from sequence data of a fixed length $k$ generated according
-to the Cavendar-Farris-Neyman (CFN) model [1].
+to the Cavendar-Farris-Neyman (CFN) model [12].
 
 Considerable research has focused on understanding the properties of
 maximum likelihood estimation. Even in the simplest cases of 3- and
 4-leaf trees, the problem exhibits substantial complexity, with a
 general solution known for 3-leaf trees, but not 4-leaf trees
-[@allman2019maximum; @chor2007analytic; @CS2004; @GGS2022; @hill2024maximum; @hobolth2024maximum; @KK2019; @Y2000].
+[1,4,6,7,8,9,11,16].
 The $4$-leaf case considered here is of special interest first due to
 the popularity of quartet-based inference methods for inferring both
-phylogenetic trees and networks [@warnow2017book], and second because it
+phylogenetic trees and networks [15], and second because it
 is the simplest case in which the phenomenon of *long-branch attraction*
 can be observed, a form of estimation bias which is only partially
-understood [@B2005; @SR2021].
+understood [2,14].
 
 Two challenges in optimizing the likelihood function are its non-convex
 nature and the presence of numerous boundary cases during optimization.
 Moreover, there can be multiple distinct maximizers of the likelihood
 function, and the maximizers can have branch lengths which are
-infinitely long or zero [@CHHP2000; @steel-1994]. This package resolves
+infinitely long or zero [5,13]. This package resolves
 these two obstacles for the CFN model by using computer algebra and the
-theory of maximum likelihood (ML) degrees [@HKS2005]. One feature
+theory of maximum likelihood (ML) degrees [10]. One feature
 distinguishing this software is that it implements a framework to
 characterize case when the tree estimates have infinite or zero-length
 branches. We believe this is useful in obtaining an understanding of
@@ -113,12 +113,12 @@ give a broad overview about our software. The CFN model is a
 parameterized semialgebraic set in $\mathbb{R}^8$ with dimension $6$. We
 optimize the likelihood function by partitioning the semialgebraic set
 according to boundaries from the parameterization, similiar to the
-approach in [@allman2019maximum] for a different model. There are $10$
+approach in [@1] for a different model. There are $10$
 different boundaries up to symmetry. All but one of them have ML degree
 less than two. The last one has ML degree 92 while the main component of
 the semialgebraic set has ML degree fourteen.[^1] We optimize the
 likelihood function on each of the boundary cases by solving the
-likelihood equations [@HKS2005] by using analytic expressions when the
+likelihood equations [10] by using analytic expressions when the
 ML degree is less than two and
 `Homotopy Continuation.jl` [@HomotopyContinuation.jl] to compute the
 critical points otherwise.
