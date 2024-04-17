@@ -1,29 +1,8 @@
----
-abstract: |
+# Short package summary:
+
   We solve a global optimization problem to perform statistical
   inference using DNA sequence alignment data for quartets under the
   Cavender-Farris-Neyman model from phylogenetics.
-author:
-- |
-  Max Hill\
-  Department of Mathematics\
-  University of California, Riverside\
-  Riverside, USA, 92521\
-  [max.hill1@ucr.edu](max.hill1@ucr.edu){.uri}
-- |
-  Jose Israel Rodriguez\
-  Department of Mathematics\
-  Department of Electrical and Computer Engineering\
-  University of Wisconsin --- Madison\
-  Madison, USA, 53703\
-  [jose@math.wisc.edu](jose@math.wisc.edu){.uri}
-bibliography:
-- refs.bib
-title: A maximum likelihood estimator for quartets under the
-  Cavender-Farris-Neyman model
-titlehead: A maximum likelihood estimator for quartets under the CFN
-  model
----
 
 # Introduction: tree topologies and the tree of life
 
@@ -95,7 +74,8 @@ list of global maximizers of the likelihood function. The output
 includes information about each of the maximizers, for example the tree
 configuration and optimal branch lengths.
 
-::: leftbar
+```
+
     SITE_PATTERN_DATA = [212, 107, 98, 115, 114, 89, 102, 163]
     fourLeafMLE(SITE_PATTERN_DATA) 
     ## Output
@@ -106,7 +86,8 @@ configuration and optimal branch lengths.
       [0.1380874841, 0.46347429951, 0.5231552324, 0.3975875363, 0.6835395124], 
       "θ1, θ2, θ3, θ4, θ5", 
       "binary quartet with topology τ=1"]
-:::
+
+```
 
 For complete details on the code, see the code documentation provided here, but now we
 give a broad overview about our software. The CFN model is a
