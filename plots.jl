@@ -1,184 +1,124 @@
-###_____________________________________________________________________________
-##
-## Felsenstein zone plot (distance version)
-##______________________________________________________________________________
-
-#=
-The coloring here isn't good, because there may be more than one MLE type which achieves maximal likelihood.
-=#
-
-##
-### Plot with hadamard axes
-x_values, y_values, z_values = Float64[], Float64[], Float64[]
-x_increments,y_increments= collect(0:0.05:0.95), collect(0:0.05:0.95)
-@time begin
-    for x in x_increments
-        for y in y_increments
-            push!(x_values,x)
-            push!(y_values,y)
-            print("$x,$y\n")
-            model=computeProbabilityVector([y,x,y,x,x],1)
-            z=0
-            for i in 1:5
-                SITE_PATTERN_DATA=rand(Multinomial(500,model))
-                if 1 in fourLeafMLE(SITE_PATTERN_DATA)[1][3] # test if the MLE is compatible with the true topology τ=1
-                    z=z+1.0
-                end
-            end
-            push!(z_values,z)
-        end
-    end
-end
-
-z_values = z_values / maximum(z_values) # normalize z
-plot()
-scatter(x_values, y_values, zcolor=z_values, c = cgrad([:white, :black]), legend=false, markershape=:square, markersize=8, markerstrokewidth=0, aspect_ratio=:equal, xlims=(-.05, 1.0), ylims=(-.05, 1.0))
-xlabel!("x ")
-ylabel!("y")
-title!("Felsenstein zone plot (Hadamard)")
-
-
 
 ###_____________________________________________________________________________
 ##
 ## Felsenstein zone plot (axes in evolutionary distance)
 ##______________________________________________________________________________
+"""
+   generate_averaged_classification_plot_data(sequence_length,
+                                              m,
+                                              lower_x, lower_y, upper_x, upper_y,
+                                              number_of_x_values, number_of_y_values; Hadamard_mode=false)
 
-@time begin
-    m=1 # number of samples per parameter regime (replicates)
-    x_values, y_values, τ1_scores, τ2_scores, τ3_scores, avg_number_of_maximizers = Float64[], Float64[], Float64[], Float64[], Float64[], Float64[]
-    #strict_τ_records = Any[]
-    sequence_length=1000
-    step_size=0.01
-    dx_increments, dy_increments = collect(0.01:step_size:1.49), collect(0.01:step_size:1.49) # distance increments
-    for x in exp.(-2*dx_increments)
-        for y in exp.(-2*dy_increments)
-            push!(x_values,x)
-            push!(y_values,y)
-            model=computeProbabilityVector([y,x,y,x,x],1)
-            model=round.(model, digits = 16) # rounding to eliminate some floating point calculation errors that result in negative probabilities.
-            print("x=",-log(x)/2,"; y=",-log(y)/2,"\n",model,"\n")
-            number_of_maximizers=0.0
-            τ_count = zeros(3)
+
+# Description
+
+"""
+function generate_averaged_classification_plot_data(sequence_length, m, lower_x, lower_y, upper_x, upper_y, number_of_x_values, number_of_y_values; Hadamard_mode=false)
+    # Intialize the vectors which will be used to store the results:
+    x_values, y_values, τ1_scores, τ2_scores, τ3_scores, avg_number_of_MLEs = Float64[], Float64[], Any[], Any[], Any[], Float64[]
+    number_of_x_steps, number_of_y_steps = number_of_x_values-1,number_of_y_values-1
+    # Compute and display step size:
+    dx = (upper_x-lower_x)/number_of_x_steps
+    dy = (upper_y-lower_y)/number_of_y_steps
+    print("\nUsing step sizes: dx = ",dx, ", dy = ",dy,"\n")
+    # Main loop (through all values of x and y in the specified range):
+    for x in ProgressBar(collect(lower_x:dx:upper_x))
+        for y in collect(lower_y:dy:upper_y)
+            # Save the x and y coordinates:
+            push!(x_values,x); push!(y_values,y)
+            # Construct the probability distribution (model) corresponding to pair (x,y):
+            model = @pipe ((Hadamard_mode ? [y,x,y,x,x] : exp.(-2*[y,x,y,x,x]))
+                           |>computeProbabilityVector(_,1)
+                           |>round.(_, digits=16))
+            # Intialize variables to save the MLE results for this model:
+            topology_counts = zeros(3)
+            number_of_MLEs = 0
             for i in 1:m
-                SITE_PATTERN_DATA=rand(Multinomial(sequence_length,model))
-                estimates=fourLeafMLE(SITE_PATTERN_DATA)
-                number_of_maximizers = number_of_maximizers + length(estimates)
-
-                # For each topology τ, identify whether there is at least one estimate compatible with τ:
-                for τ in 1:3
-                    if any([(τ in x[3]) for x in estimates])
-                        τ_count[τ] = τ_count[τ] + 1
-                    end
-                end
-        
+                # Sample from the model and compute an MLE from the sample:
+                estimates = rand(Multinomial(sequence_length,model)) |> fourLeafMLE
+                # Identify which topologies the set of ML points is compatible with:
+                topology_counts = topology_counts + Int[any([(τ in x[3]) for x in estimates]) for τ in 1:3]
+                # Keep a running total of the number of MLEs for samples corresponding to (x,y):
+                number_of_MLEs = number_of_MLEs + length(estimates)
             end
-            push!(τ1_scores,τ_count[1])
-            push!(τ2_scores,τ_count[2])
-            push!(τ3_scores,τ_count[3])
-            push!(avg_number_of_maximizers,number_of_maximizers/m)
+            # Save the values (x,y) and the results for the model with those branch lengths:
+            push!(τ1_scores,topology_counts[1]/m)
+            push!(τ2_scores,topology_counts[2]/m)
+            push!(τ3_scores,topology_counts[3]/m)
+            push!(avg_number_of_MLEs,number_of_MLEs/m)
         end
     end
-end # 583 seconds to compute 3610 MLE estimates = about 6 estimates per second per core. Multithreading
-# with 12 cores, we get about 54 per second. (This was based on a test of 44404 trees that took 8182 seconds.)
-
-
-# convert branch lengths to evolutionary distances and normalize z
-x_dist=-(1/2)*log.(x_values)
-y_dist=-(1/2)*log.(y_values)
-
-plot()
-p1 = scatter(x_dist, y_dist, zcolor=τ1_scores, c = cgrad([:white, :black]), legend=false,
-             markershape=:square, markersize=1.2, markerstrokewidth=0, aspect_ratio=:equal, xlims=(0, 1.501),
-             ylims=(0, 1.501), xlabel="parameter x", ylabel="parameter y",
-             title="Estimated topology concordance with 12|34", colorbar=true,
-             colorbar_title="Proportion having topology 12|34")
-
-
-p2 = scatter(x_dist, y_dist, zcolor=τ2_scores, c = cgrad([:white, :black]), legend=false,
-             markershape=:square, markersize=1.2, markerstrokewidth=0, aspect_ratio=:equal, xlims=(0, 1.501),
-             ylims=(0, 1.501), xlabel="parameter x", ylabel="parameter y", title="Estimated topology concordance with 13|24",
-             colorbar=true)
-
-p3 = scatter(x_dist, y_dist, zcolor=τ3_scores, c = cgrad([:white, :black]), legend=false,
-             markershape=:square, markersize=1.2, markerstrokewidth=0, aspect_ratio=:equal, xlims=(0, 1.501),
-             ylims=(0, 1.501), xlabel="parameter x", ylabel="parameter y", title="Estimated topology concordance with 14|23",
-             colorbar=true)
-
-p4 = scatter(x_dist, y_dist, zcolor=avg_number_of_maximizers, c = cgrad([:white, :black]), legend=false,
-            markershape=:square, markersize=1.2, markerstrokewidth=0, aspect_ratio=:equal, xlims=(0, 1.501),
-            ylims=(0, 1.501), xlabel="parameter x", ylabel="parameter y", title="Avg number of global maxima", colorbar=true)
-
-
-
-# Initialize the plot
-p5 = plot(legend = :outertopright)
-
-# Define your custom color gradient
-color_mapping = Dict("multiple MLEs" => :white, "unique bdry case" => :black, "unique τ1" => :green, "unique τ2" => :red, "unique τ3" => :blue)
-
-# Add each category to the plot separately
-for category in ["unique τ1", "unique τ2", "unique τ3", "multiple MLEs", "unique bdry case"]
-    mask = strict_τ_records .== category
-    scatter!(p5, x_dist[mask], y_dist[mask],
-             c = color_mapping[category],
-             label = category,
-             markershape=:square, markersize=1.2, markerstrokewidth=0)
-end
-
-# Set the remaining plot attributes
-plot!(p5, aspect_ratio=:equal, xlims=(0, 1.501), ylims=(0, 1.501),
-      xlabel="parameter x", ylabel="parameter y", title="Avg number of global maxima")
-
-
-
-
-
-##
-### Plot of how frequently boundary cases are inferred
-sequence_length = 200
-replicates_per_parameter_regime = 1
-step_size = 0.02
-collect(0.01:step_size:1.49)
-@time begin
-    x=[]
-    y=[]
-    z=Float64[]
-    d = 0.01*(1:100) # desired distance intervals. 
-    for a in exp.(-2*d)
-        for b in exp.(-2*d)
-            push!(x,a)
-            push!(y,b)
-            model=computeProbabilityVector([b,a,b,a,a],1)
-            model=round.(model, digits=16) # rounding to eliminate some floating point calculation errors that result in negative probabilities.
-            print("a=",a,"; b=", b, "\n",model,"\n")
-            color_val=0
-            for i in 1:replicates_per_parameter_regime
-                SITE_PATTERN_DATA=rand(Multinomial(sequence_length,model))
-                if fourLeafMLE(SITE_PATTERN_DATA)[1][2] != "R1"
-                    color_val=color_val+1.0
-                end
-            end
-            push!(z,color_val)
-        end
-    end
+    return [x_values,y_values,τ1_scores,τ2_scores,τ3_scores,avg_number_of_MLEs]
 end
 
 
-# convert branch lengths to evolutionary distances and normalize z
-x_dist=-(1/2)*log.(x)
-y_dist=-(1/2)*log.(y)
-z = z / maximum(z)
+"""
+  make_averaged_classification_plot(sequence_length, 
+                                           x_values, y_values, scores;
+                                           topology=nothing,
+                                           marker_size=nothing,
+                                           Hadamard_mode=false)
 
-# plot
-color_gradient = cgrad([:red, :blue])
-plot()
-scatter(x_dist, y_dist, zcolor=z, c = color_gradient, legend=false, markershape=:square, markersize=10, markerstrokewidth=.2)
-xlabel!("a")
-ylabel!("b")
-title!("Boundary case frequency plot (evolutionary dist.)")
+# Description
 
-# savefig("boundary-case-frequency-",sequence_length,"bp-",replicates_per_parameter_regime," replicates")
+Using data from generate_averaged_classification_plot_data, makes a Felsenstein plot with points
+representing the propotion of samples whose MLE is concordant with the specified topology.
+
+# Output
+
+Saves a plot in the directory `plots/'
+"""
+
+function make_averaged_classification_plot(sequence_length,
+                                           m,
+                                           x_values, y_values, scores;
+                                           topology=nothing,
+                                           marker_size=nothing,
+                                           Hadamard_mode=false)
+    # Determine plot bounds and step size from the data:
+    lower_x, lower_y, upper_x, upper_y = [minimum.([x_values,y_values]); maximum.([x_values,y_values])]
+    number_of_y_values, number_of_x_values= [sum([v[i] == v[1] for i in 1:length(v)]) for v in [x_values,y_values]]
+    dx, dy = (upper_x-lower_x)/number_of_x_values, (upper_y-lower_y)/number_of_y_values
+    # Attempt to pick a sensible value for marker_size if none is supplied:
+    if marker_size == nothing
+        marker_size = 171/maximum([number_of_x_values, number_of_y_values])
+    end
+    p = scatter(x_values, y_values, zcolor=scores, c = cgrad([:white, :black]), legend=false,
+                markershape=:square, markersize=marker_size, markerstrokewidth=0, aspect_ratio=:equal,
+                colorbar=true)
+    # Identify topology name:
+    topology_name=["12|34", "13|24", "14|23"][topology]
+    plot!(p, title="MLE concordance with $(topology_name) (m=$(m))",
+          colorbar_title="Proportion of estimates consistent with topology $(topology_name)")
+    # Begin plotting each color category separately:
+    default(fontfamily="Computer Modern")
+    # Set the remaining plot attributes, depending on the type of edge parameters:
+    if Hadamard_mode == true
+        plot!(p, xlims=(0, 1), ylims=(0, 1),
+              xlabel=L"\theta_x \quad \textrm{(%$(number_of_x_values)\ values})",
+              ylabel=L"\theta_y \quad \textrm{(%$(number_of_y_values)\ values})")
+        savefig("plots/averaged-classification-plot-hadamard-τ$(topology)-k$(sequence_length)-resolution$(number_of_x_values)x$(number_of_y_values)-marker$(marker_size).svg")
+    else
+        plot!(p, xlims=(lower_x-dx, upper_x+dx), ylims=(lower_y-dy, upper_y+dy),
+              xlabel=L"d_x \quad \textrm{(%$(number_of_x_values)\ values})",
+              ylabel=L"d_y \quad \textrm{(%$(number_of_y_values)\ values})")
+        savefig("plots/averaged-classification-plot-distance-τ$(topology)--k$(sequence_length)-resolution$(number_of_x_values)x$(number_of_y_values)-marker$(marker_size).svg")
+    end   
+end
+
+# Examples
+sequence_length=1000 # in bp
+m=20 # number of replicates per point
+@time x_values, y_values, τ1_scores, τ2_scores, τ3_scores, avg_number_of_MLEs = generate_averaged_classification_plot_data(1000, 0.01, 0.01, 1.5, 1.5, 100, 100, Hadamard_mode=false)
+make_averaged_classification_plot(sequence_length, m, x_values, y_values, τ1_scores; topology=1, Hadamard_mode=false)
+make_averaged_classification_plot(sequence_length, m, x_values, y_values, τ2_scores, topology=2; Hadamard_mode=false)
+make_averaged_classification_plot(sequence_length, m, x_values, y_values, τ3_scores, topology=3; Hadamard_mode=false)
+
+x_values, y_values, τ1_scores, τ2_scores, τ3_scores, avg_number_of_MLEs = generate_averaged_classification_plot_data(1000, 0.01, 0.01, 0.99, 0.99, 100, 100, Hadamard_mode=true)
+make_averaged_classification_plot(sequence_length, m, x_values, y_values, τ1_scores, topology=1; Hadamard_mode=true)
+make_averaged_classification_plot(sequence_length, m, x_values, y_values, τ2_scores, topology=2; Hadamard_mode=true)
+make_averaged_classification_plot(sequence_length, m, x_values, y_values, τ3_scores, topology=3; Hadamard_mode=true)
+
 
 
 
@@ -196,7 +136,10 @@ using Pipe, ProgressBars, LaTeXStrings
 
 """
 
-   `generate_classification_plot_data(sequence_length, lower_x, lower_y, upper_x, upper_y, number_of_x_values, number_of_y_values; Hadamard_mode=false)'
+   `generate_classification_plot_data(sequence_length,
+                                      lower_x, lower_y, upper_x, upper_y,
+                                      number_of_x_values, number_of_y_values;
+                                      Hadamard_mode=false)'
 
 # Description
 For each pair (x,y) with x and y within some user-specified range, do the following:
@@ -212,7 +155,7 @@ For each pair (x,y) with x and y within some user-specified range, do the follow
 
 Then save the pair (x,y) together with the inferred compatible topology classification.
 
-# arguments
+# Arguments
 
   - `sequence_length' : length in bp of the data to be generated for each parameter regime (x,y)
 
@@ -226,14 +169,17 @@ Then save the pair (x,y) together with the inferred compatible topology classifi
                                                in a plot that is less pixelated but will take longer
                                                to produce.
 
-  - `Hadamard_mode' : The function has two modes. When `Hadamard_mode = false', x and y are
-                      interpreted as being branch lengths measured in expected number of mutations
-                      per site (i.e., evolutionary distance). When `Hadamard_mode = true', x and y
-                      are interpreted as being Hadamard edge parameters, (i.e., which are obtained by
-                      applying the function d -> exp(-2d) to the evolutionary distances).
+  - `Hadamard_mode' : Optional parameter which determines which of 2 modes the function is run in.
+                      When `Hadamard_mode = false', x and y are interpreted as being branch lengths
+                      measured in expected number of mutations per site (i.e., evolutionary
+                      distance). When `Hadamard_mode = true', x and y are interpreted as being
+                      Hadamard edge parameters, (i.e., which are obtained by applying the function d
+                      -> exp(-2d) to the evolutionary distances).
 
 """
-function generate_classification_plot_data(sequence_length, lower_x, lower_y, upper_x, upper_y, number_of_x_values, number_of_y_values; Hadamard_mode=false)
+function generate_classification_plot_data(sequence_length, lower_x, lower_y, upper_x, upper_y,
+                                           number_of_x_values, number_of_y_values;
+                                           Hadamard_mode=false)
     number_of_x_steps, number_of_y_steps = number_of_x_values-1,number_of_y_values-1
     x_values, y_values, categorical_results = Float64[], Float64[], Any[]
     dx = (upper_x-lower_x)/number_of_x_steps
@@ -262,7 +208,10 @@ end
 
 """
 
-   `make_classification_plot(sequence_length, x_values, y_values, categorical_data; marker_size=nothing, Hadamard_mode=false)'
+   `make_classification_plot(sequence_length,
+                             x_values, y_values, categorical_data;
+                             marker_size=nothing,
+                             Hadamard_mode=false)'
 
 # Description
 
@@ -297,7 +246,9 @@ A plot like thos shown in the abstract. The plot is saved as an .svg file to
 "plots/hadamard-plot.svg".
 
 """
-function make_classification_plot(sequence_length, x_values, y_values, categorical_data; marker_size=nothing, Hadamard_mode=false)
+function make_classification_plot(sequence_length,
+                                  x_values, y_values, categorical_data;
+                                  marker_size=nothing, Hadamard_mode=false)
     # Determine plot bounds and step size from the data:
     lower_x, lower_y, upper_x, upper_y = [minimum.([x_values,y_values]); maximum.([x_values,y_values])]
     number_of_y_values, number_of_x_values= [sum([v[i] == v[1] for i in 1:length(v)]) for v in [x_values,y_values]]
@@ -309,9 +260,13 @@ function make_classification_plot(sequence_length, x_values, y_values, categoric
     # Define the color gradient and legend labels:
     color_mapping = Dict("τ=1" => :green, "τ=2" => :red, "τ=3" => :blue, "τ=1,2" => :yellow, "τ=1,3" => :cyan,
                          "τ=2,3" => :magenta, "Any topology" => :white)
-    label_mapping = Dict("τ=1" => L"\widehat{\tau}=1", "τ=2" => L"\widehat{\tau}=2", "τ=3" => L"\widehat{\tau}=3",
-                         "τ=1,2" => L"\widehat{\tau}=1,2", "τ=1,3" => L"\widehat{\tau}=1,3",
-                         "τ=2,3" => L"\widehat{\tau}=2,3", "Any topology" => L"\widehat{\tau} = \textrm{any}\ \textrm{topology}")
+    label_mapping = Dict("τ=1" => L"\widehat{\tau}=12|34",
+                         "τ=2" => L"\widehat{\tau}=13|24",
+                         "τ=3" => L"\widehat{\tau}=14|23",
+                         "τ=1,2" => L"\widehat{\tau}=12|34\ \textrm{or}\ 13|24",
+                         "τ=1,3" => L"\widehat{\tau}=12|34\ \textrm{or}\ 14|23",
+                         "τ=2,3" => L"\widehat{\tau}=13|24\ \textrm{or}\ 14|23",
+                         "Any topology" => L"\widehat{\tau} = \textrm{any}\ \textrm{topology}")
     # Begin plotting each color category separately:
     default(fontfamily="Computer Modern")
     p = plot(legend = :outertopright)
@@ -352,6 +307,11 @@ sequence_length=1000
 x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, .99, .99, 200, 200, Hadamard_mode=true)
 make_classification_plot(sequence_length, x_values, y_values, categorical_results, Hadamard_mode=true);
 
+## Example Hadamard Plot # 3 
+sequence_length=1000
+x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, .99, .99, 300, 300, Hadamard_mode=true)
+make_classification_plot(sequence_length, x_values, y_values, categorical_results, Hadamard_mode=true);
+
 
 ## Example Distance Plot # 1 -- Done
 sequence_length=1000
@@ -364,7 +324,7 @@ x_values, y_values, categorical_results = generate_classification_plot_data(sequ
 make_classification_plot(sequence_length, x_values, y_values, categorical_results)
 
 
-## Example Distance Plot # 3
+## Example Distance Plot # 3 -- Done
 sequence_length=1000
 @time x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, 1.5, 1.5, 300, 300)
 make_classification_plot(sequence_length, x_values, y_values, categorical_results)

@@ -18,7 +18,6 @@ include("aux-functions-for-R3-through-R10.jl")
 ## Compute list of MLEs
 ##______________________________________________________________________________
 
-
 """
    test_data_genericity(SITE_PATTERN_DATA)
 
@@ -100,6 +99,14 @@ listMaxima(SITE_PATTERN_DATA)
 ```
 
 """
+
+random_hadamard_edge_parameters=rand(5)
+test_model=computeProbabilityVector(random_hadamard_edge_parameters,1)
+N=1000
+SITE_PATTERN_DATA = rand(Multinomial(N,test_model))
+fourLeafMLE(SITE_PATTERN_DATA)
+SITE_PATTERN_DATA
+
 function fourLeafMLE(SITE_PATTERN_DATA)
     "Attempt to return the global maxima."
     test_data_genericity(SITE_PATTERN_DATA) || error("Data does not satisfy genericity conditions")
@@ -116,7 +123,7 @@ function fourLeafMLE(SITE_PATTERN_DATA)
     tmp = [x for x in tmp if x[1] == maximum_logL] 
     return tmp
 end
-
+ [212, 107, 98, 115, 114, 89, 102, 163]
 
 """
    listMaxima(SITE_PATTERN_DATA)
