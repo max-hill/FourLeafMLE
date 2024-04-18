@@ -23,8 +23,6 @@ point is a probability measure which may or may not correspond to a tree with
 finite and positive branch lengths.
 
 """
-
-
 function compute_R1_or_R2_critical_points_with_homotopy(SITE_PATTERN_DATA,τ)
     @var p₁ p₂ p₃ p₄ p₅ p₆ p₇ p₈ λ₁ λ₂ λ₃ λ₄ p λ
     @var u[1:8] # data parameters (ie want to solve when u=SITE_PATTERN_DATA)
@@ -78,11 +76,12 @@ are known to be real, take only the real part.
 """
 get_p(newton_result::NewtonResult)=real(getfield(newton_result,:x))[1:8]
 
-"Refine all critical points by applying Newton's method. Output: a list of
-refined probability measures."
-function refine_critical_points(
-    F::FixedParameterSystem, criticalPoints,
-    Fcache::NewtonCache{HomotopyContinuation.MatrixWorkspace{Matrix{ComplexF64}}})
+"""
+Refine all critical points by applying Newton's method. Output: a list of
+refined probability measures.
+"""
+function refine_critical_points(F::FixedParameterSystem, criticalPoints,
+                                Fcache::NewtonCache{HomotopyContinuation.MatrixWorkspace{Matrix{ComplexF64}}})
     return [get_p(newton(F,point,atol=1e-128,max_iters=100,Fcache,extended_precision=true))
             for point in criticalPoints]
 end
