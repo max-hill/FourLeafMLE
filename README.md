@@ -1,4 +1,4 @@
-# Package summary:
+# Package summary
 
   This Julia package solves a global optimization problem to perform statistical
   inference using DNA sequence alignment data for quartets under the
