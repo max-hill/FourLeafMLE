@@ -1,4 +1,4 @@
- ###_____________________________________________________________________________
+###_____________________________________________________________________________
 ##
 ## Felsenstein zone plot (axes in evolutionary distance)
 ##______________________________________________________________________________
@@ -50,7 +50,6 @@ function generate_averaged_classification_plot_data(sequence_length, m, lower_x,
     return [x_values,y_values,τ1_scores,τ2_scores,τ3_scores,avg_number_of_MLEs]
 end
 
-
 """
   make_averaged_classification_plot(sequence_length, 
                                            x_values, y_values, scores;
@@ -67,7 +66,6 @@ representing the propotion of samples whose MLE is concordant with the specified
 
 Saves a plot in the directory `plots/'
 """
-
 function make_averaged_classification_plot(sequence_length,
                                            m,
                                            x_values, y_values, scores;
@@ -129,7 +127,6 @@ end
 ##
 ## Colored classification plots (with m=1 for each pixel)
 ##______________________________________________________________________________
-
 
 """
 
