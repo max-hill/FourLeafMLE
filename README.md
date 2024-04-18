@@ -4,8 +4,34 @@
   inference using DNA sequence alignment data for quartets under the
   Cavender-Farris-Neyman model from phylogenetics.
 
-  Authors: Max Hill (UC-Riverside) and Jose Israel Rodriguez (UW-Madison)
-  
+# Quickstart instructions
+
+To use this package, open a julia session and change the working directory to
+`/FourLeafMLE/src/`. Then run
+
+```
+include("FourLeafMLE.jl")
+using .FourLeafMLE
+```
+
+You may need to install the dependencies listed in [Package.toml](Package.toml]
+This will take a moment of pre-processingt (to compute start solutions for
+homotopy continuation). Once that finishes, you'll be able to run the functions
+in the export list of [FourLeafMLE.jl](src/FourLeafMLE.jl). For example,
+
+```
+fourLeafMLE([123,43,54,83,21,32,24,51])
+listMaxima([123,43,54,83,21,32,24,51])
+```
+
+See docstrings for more detailed instructions (and examples) for using these
+functions.
+
+**Tip:** For better performance, run Julia with multiple threads by launching it
+with `julia -t auto`. You can check the number of threads with
+`Threads.nthreads()`
+
+
 # Background: tree topologies and the tree of life
 
 One of the core motivations in evolutionary biology is to reconstruct

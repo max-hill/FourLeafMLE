@@ -9,7 +9,7 @@ export
     generate_classification_plot_data,
     compute_probability_vector,
     computeProbabilityVector,
-    compute_hadamard_parameters,
+    compute_hadamard_parameters
     
 
 
@@ -30,17 +30,6 @@ include("plots.jl")
 
 end
 
-#=INSTRUCTIONS FOR USE:
-To load the module, run the above code, and then run
-
-`import .FourLeafMLE'
-
-You can then use the exported functions. See docstrings for instructions and
-examples of how to use them.
-=#
-
-
-# NOTE: For optimal performance, run Julia with multiple threads.
-# To do this in emacs REPL, first run (setenv "JULIA_NUM_THREADS" "12")
-# To check the number of treads, run Threads.nthreads() in Julia.
+# Note to self: to run Julia with multiple threads in the emacs REPL, first run
+# (setenv "JULIA_NUM_THREADS" "12").
 
