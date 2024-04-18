@@ -6,7 +6,13 @@
 
 # Quickstart instructions
 
-To use this package, open a julia session and change the working directory to
+To get started, first clone this repository by running the following command from a terminal:
+
+```
+git clone https://github.com/max-hill/FourLeafMLE.git
+```
+
+Next, open a Julia session and change the working directory to
 `/FourLeafMLE/src/`, and make sure all dependencies listed in
 [Project.toml](Project.toml) are installed.
 
@@ -19,10 +25,18 @@ using .FourLeafMLE
 
 This will take a moment of pre-processing (to compute start solutions for
 homotopy continuation). Once it finishes, you'll be able to run the functions
-in the export list of [FourLeafMLE.jl](/src/FourLeafMLE.jl). For example,
+in the export list of [FourLeafMLE.jl](/src/FourLeafMLE.jl). 
+
+
+For example, if the data takes the form of a site pattern frequency vector `[123,43,54,83,21,32,24,51]`, we can perform maximum likelihood estimation by running the following function:
 
 ```
 fourLeafMLE([123,43,54,83,21,32,24,51])
+```
+
+To obtain a list of all local maxima over both interior and boundary components of the model, run
+
+```
 listMaxima([123,43,54,83,21,32,24,51])
 ```
 
