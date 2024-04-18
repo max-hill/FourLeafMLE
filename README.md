@@ -8,7 +8,7 @@
 
 To use this package, open a julia session and change the working directory to
 `/FourLeafMLE/src/`, and make sure all dependencies listed in
-[Package.toml](Package.toml) are installed.
+[Package.toml](./Package.toml) are installed.
 
 Then run
 
@@ -19,7 +19,7 @@ using .FourLeafMLE
 
 This will take a moment of pre-processing (to compute start solutions for
 homotopy continuation). Once it finishes, you'll be able to run the functions
-in the export list of [FourLeafMLE.jl](src/FourLeafMLE.jl). For example,
+in the export list of [FourLeafMLE.jl](/src/FourLeafMLE.jl). For example,
 
 ```
 fourLeafMLE([123,43,54,83,21,32,24,51])
