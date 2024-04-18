@@ -8,7 +8,7 @@
 
 To use this package, open a julia session and change the working directory to
 `/FourLeafMLE/src/`, and make sure all dependencies listed in
-[Package.toml](/Package.toml) are installed.
+[Project.toml](Project.toml) are installed.
 
 Then run
 
