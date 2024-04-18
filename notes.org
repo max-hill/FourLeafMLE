@@ -1,10 +1,7 @@
 * Idea for the april paper
 Implement 2 versions of the maximizer. One which checks all submodels. The other which checks only those needed,
 according to Rhodes and Zwiernick's latent class model paper. We can verify whether this is really all we need.
-* make a felsenstein zone picture
-* finish adding likelihoods
-* carefully check the parts of the program
-* turn it into a module
+
 * Tiebreaking
 - report if tiebreaking results in different Felsenstein plots
 - does your solution result in a problem?! You may be throwing out non-unique MLEs. Does Steel or Chor have a full
