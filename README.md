@@ -205,4 +205,4 @@ above tree:
 16. Yang Z. Complexity of the simplest phylogenetic estimation problem. Proceedings of the Royal Society of London Series B: Biological Sciences. 2000;267(1439):109-116.
 
 
-[^1]: The numbers $14$ and $92$ were computed previously in [@GGS2022 Table 2].
+[^1]: The numbers 14 and 92 were computed previously in [@GGS2022 Table 2].
