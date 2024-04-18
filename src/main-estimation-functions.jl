@@ -39,8 +39,8 @@ well as all submodels, and returning a list of only those which maximize the lik
 # Arguments
 
 - `SITE_PATTERN_DATA` : A site frequency vector of length 8, specifying the number of times each site
-                        pattern is observed in the data. The patterns are ordered as [xxxx, xxxy, xxyx,
-                        xxyy, xyxx, xyxy, xyyx, xyyy] where x and y signify different nucleotides. For
+                        pattern is observed in the data. The patterns are ordered as `[xxxx, xxxy, xxyx,
+                        xxyy, xyxx, xyxy, xyyx, xyyy]` where x and y signify different nucleotides. For
                         example, the vector `SITE_PATTERN_DATA=[14,2,5,10,7,4,3,6]` means that pattern
                         xxxx is observed 14 times, pattern xxxy is observed 2 times, pattern xxyx is
                         observe 5 times, and so forth.
@@ -52,8 +52,13 @@ corresponds to a located maximum and takes the form
 
 ```
 
-[logL, reduced tree class, list of compatible binary quartet topologies,
- branch lengths (excluding those which equal 0 or 1), branch length names, labels, verbal description]
+[logL,
+ reduced tree class,
+ list of compatible binary quartet topologies,
+ branch lengths (excluding those which equal 0 or 1),
+ branch length names,
+ labels,
+ verbal description]
 
 ```
 
@@ -61,7 +66,7 @@ Here, the 'reduced tree class' refers to a scheme developed by the authors to ca
 type of computations required to find their local maxima. There are 10 nontrivial classes (i.e., which
 having nonzero likelihoods for generic data), denoted R1, R2, ..., R10. For example, R1 = binary quartet,
 R2 = star tree, and R3 through R10 refer to additional submodel types whose details can be found in the
-comments of the file `aux-functions-for-R3-through-R10.jl'.
+comments of the file `aux-functions-for-R3-through-R10.jl`.
 
 If two or more local maxima are found which maximize the likelihood, then this function will return more
 than one maximum likelihood estimator. There are two possible reasons for this (1) the MLE is indeed not

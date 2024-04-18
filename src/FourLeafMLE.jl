@@ -9,8 +9,8 @@ export
     generate_classification_plot_data,
     compute_probability_vector,
     computeProbabilityVector,
-    compute_hadamard_parameters
-    
+    compute_hadamard_parameters,
+    Multinomial # from the package Distributions
 
 
 using Distributions
