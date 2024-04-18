@@ -8,7 +8,7 @@
 
 To use this package, open a julia session and change the working directory to
 `/FourLeafMLE/src/`, and make sure all dependencies listed in
-[Package.toml](Package.toml). are installed.
+[Package.toml](Package.toml) are installed.
 
 Then run
 
@@ -17,8 +17,8 @@ include("FourLeafMLE.jl")
 using .FourLeafMLE
 ```
 
-This will take a moment of pre-processingt (to compute start solutions for
-homotopy continuation). Once that finishes, you'll be able to run the functions
+This will take a moment of pre-processing (to compute start solutions for
+homotopy continuation). Once it finishes, you'll be able to run the functions
 in the export list of [FourLeafMLE.jl](src/FourLeafMLE.jl). For example,
 
 ```
@@ -26,8 +26,12 @@ fourLeafMLE([123,43,54,83,21,32,24,51])
 listMaxima([123,43,54,83,21,32,24,51])
 ```
 
-See docstrings for more detailed instructions (and examples) for using these
-functions.
+For more detailed instructions (and examples) for using these
+functions, see the function docstrings, for example by running
+
+```
+@doc fourLeafMLE
+```
 
 **Tip:** For better performance, run Julia with multiple threads by launching it
 with `julia -t auto`. You can check the number of threads with

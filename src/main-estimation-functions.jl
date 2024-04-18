@@ -8,19 +8,19 @@
 
 # Description
 
-Test whether a data vector is generic. Here, 'generic' means that for each pair of leaves, i and j, there
-exists at least one site such that the base pair at leaf i differs from the base pair at leaf j. The
-functions in this package cannot handle non-generic data without errors.
+Test whether a data vector is generic. Here, 'generic' means that for each pair
+of leaves, i and j, there exists at least one site such that the base pair at
+leaf i differs from the base pair at leaf j. The functions in this package
+cannot handle non-generic data without errors.
 
 # Examples
 
 ```
-julia> test_data_genericity([1,0,0,0,0,0,0,0])
-false
+test_data_genericity([1,0,0,0,0,0,0,0])
 
-julia> test_data_genericity([1,3,5,0,0,9,5,4])
-true
+test_data_genericity([1,3,5,0,0,9,5,4])
 
+```
 """
 function test_data_genericity(SITE_PATTERN_DATA)
     all([any(>(0),round.(SITE_PATTERN_DATA[subset], digits = 10))
@@ -38,7 +38,7 @@ well as all submodels, and returning a list of only those which maximize the lik
 
 # Arguments
 
-- `SITE_PATTERN_DATA' : A site frequency vector of length 8, specifying the number of times each site
+- `SITE_PATTERN_DATA` : A site frequency vector of length 8, specifying the number of times each site
                         pattern is observed in the data. The patterns are ordered as [xxxx, xxxy, xxyx,
                         xxyy, xyxx, xyxy, xyyx, xyyy] where x and y signify different nucleotides. For
                         example, the vector `SITE_PATTERN_DATA=[14,2,5,10,7,4,3,6]` means that pattern
@@ -106,8 +106,8 @@ end
 # Description
 
 Return a list of local maxima or critical points, sorted by log-likelihood. The only difference with the
-function `fourLeafMLE()' is that `listMaxima' does not filter out critical points which do not achieve
-the global optimum. See the documentation for `fourLeafMLE()'.
+function `fourLeafMLE()` is that `listMaxima` does not filter out critical points which do not achieve
+the global optimum. See the documentation for `fourLeafMLE()`.
 
 # Example usage:
 
