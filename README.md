@@ -1,6 +1,6 @@
 # Package summary:
 
-  We solve a global optimization problem to perform statistical
+  This Julia package solves a global optimization problem to perform statistical
   inference using DNA sequence alignment data for quartets under the
   Cavender-Farris-Neyman model from phylogenetics.
 
