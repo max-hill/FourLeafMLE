@@ -7,14 +7,16 @@
 # Quickstart instructions
 
 To use this package, open a julia session and change the working directory to
-`/FourLeafMLE/src/`. Then run
+`/FourLeafMLE/src/`, and make sure all dependencies listed in
+[Package.toml](Package.toml). are installed.
+
+Then run
 
 ```
 include("FourLeafMLE.jl")
 using .FourLeafMLE
 ```
 
-You may need to install the dependencies listed in [Package.toml](Package.toml]
 This will take a moment of pre-processingt (to compute start solutions for
 homotopy continuation). Once that finishes, you'll be able to run the functions
 in the export list of [FourLeafMLE.jl](src/FourLeafMLE.jl). For example,
