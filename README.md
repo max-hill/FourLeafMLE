@@ -12,11 +12,15 @@ To get started, first clone this repository by running the following command fro
 git clone https://github.com/max-hill/FourLeafMLE.git
 ```
 
-Next, open a Julia session and change the working directory to
-`/FourLeafMLE/src/`, and make sure all dependencies listed in
-[Project.toml](Project.toml) are installed.
+Next, open a Julia session and change the working directory to `/FourLeafMLE`. To install all dependencies, which are listed in
+[Project.toml](Project.toml), press `]` to enter package mode and then run the command
 
-Then run
+```
+instantiate
+```
+To exit package mode, press `backspace`.
+
+Then from teh directory `/FourLeafMLE/src` run
 
 ```
 include("FourLeafMLE.jl")
