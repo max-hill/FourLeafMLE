@@ -332,3 +332,101 @@ end
 ##______________________________________________________________________________
 
 # Include some tests with data from Chor 2003?
+
+
+###_____________________________________________________________________________
+##
+## Sample complexity plot 
+##______________________________________________________________________________
+
+function generate_sample_complexity_plot_data(lower_f, upper_f, lower_k, upper_k,
+                                              number_of_f_values, number_of_k_values,
+                                              leaf_length;
+                                              Hadamard_mode=false)
+    number_of_f_steps, number_of_k_steps = number_of_f_values-1,number_of_k_values-1
+    f_values, k_values, categorical_results = Float64[], Float64[], Any[]
+    df = (upper_f-lower_f)/number_of_f_steps
+    dk = (upper_k-lower_k)/number_of_k_steps
+    L=leaf_length
+    print("\nUsing step sizes: df = ",df, ", dk = ",dk,"\n")
+    for f in ProgressBar(collect(lower_f:df:upper_f))
+        for k in collect(lower_k:dk:upper_k)
+            edge_parameters = (Hadamard_mode ? [L,L,L,L,f] : exp.(-2*[L,L,L,L,f]))
+            sequence_length = Int(round(k, digits=0))
+            push!(f_values,f); push!(k_values,sequence_length)
+            # Compute the estimates. Rounding step is necessary for certain edge cases where
+            # approximate arithmetic results probabilities which are negative rather than zero.
+            estimates = @pipe (computeProbabilityVector(edge_parameters,1)
+                               |> round.(_, digits=16)
+                               |> rand(Multinomial(sequence_length,_))
+                               |> fourLeafMLE)
+            # Identify which topologies the set of MLE points is compatible with
+            τ_count = Int[any([(τ in x[3]) for x in estimates]) for τ in 1:3]
+            category = ["τ=1", "τ=2", "τ=1,2", "τ=3", "τ=1,3", "τ=2,3", "Any topology"][[1 2 4]*τ_count]
+            # Save the result
+            append!(categorical_results,category)            
+        end
+    end
+    return [f_values,k_values,categorical_results]
+end
+
+function make_sample_complexity_plot(f_values, k_values, categorical_data, f_scaling; 
+                                  marker_size=nothing, Hadamard_mode=false)
+    # Determine plot bounds and step size from the data:
+    lower_f, lower_k, upper_f, upper_k = [minimum.([f_values,k_values]); maximum.([f_values,k_values])]
+    number_of_k_values, number_of_f_values= [sum([v[i] == v[1] for i in 1:length(v)]) for v in [f_values,k_values]]
+    df, dk = (upper_f-lower_f)/number_of_f_values, (upper_k-lower_k)/number_of_k_values
+    # Attempt to pick a sensible value for marker_size if none is supplied:
+    if marker_size == nothing
+        marker_size = 171/maximum([number_of_f_values, number_of_k_values])
+    end
+    # Define the color gradient and legend labels:
+    color_mapping = Dict("τ=1" => :green, "τ=2" => :red, "τ=3" => :blue, "τ=1,2" => :yellow, "τ=1,3" => :cyan,
+                         "τ=2,3" => :magenta, "Any topology" => :white)
+    label_mapping = Dict("τ=1" => L"\widehat{\tau}=12|34",
+                         "τ=2" => L"\widehat{\tau}=13|24",
+                         "τ=3" => L"\widehat{\tau}=14|23",
+                         "τ=1,2" => L"\widehat{\tau}=12|34\ \textrm{or}\ 13|24",
+                         "τ=1,3" => L"\widehat{\tau}=12|34\ \textrm{or}\ 14|23",
+                         "τ=2,3" => L"\widehat{\tau}=13|24\ \textrm{or}\ 14|23",
+                         "Any topology" => L"\widehat{\tau} = \textrm{any}\ \textrm{topology}")
+    # Begin plotting each color category separately:
+    default(fontfamily="Computer Modern")
+    p = plot(legend = :outertopright)
+    for category in ["τ=1", "τ=2", "τ=3", "Any topology", "τ=1,2", "τ=1,3", "τ=2,3"]
+        mask = categorical_results .== category
+        scatter!(p, f_scaling * f_values[mask], k_values[mask], c = color_mapping[category], label = label_mapping[category],
+                 markershape=:square, markersize=marker_size, markerstrokewidth=0)
+    end
+    # Set the remaining plot attributes, depending on the type of edge parameters:
+    if Hadamard_mode == true
+        plot!(p, aspect_ratio=:equal, xlims=(0, 1), ylims=(lower_k, upper_k),
+              xlabel=L"\textrm{internal\ branch\ length\ }f \quad \textrm{(%$(number_of_f_values)\ values})",
+              ylabel=L"\textrm{sequence\ length\ }k \quad \textrm{(%$(number_of_k_values)\ values})")
+        savefig("sample-complexity-plot-hadamard.svg")
+    else
+        plot!(p, aspect_ratio=:equal,
+              xlims=((lower_f-df)*f_scaling, upper_f*f_scaling), ylims=(lower_k-dk, upper_k+dk),
+              xlabel=L"\textrm{internal\ branch\ length\ }f \quad \textrm{(%$(number_of_f_values)\ values})",
+              ylabel=L"\textrm{sequence\ length\ }k \quad \textrm{(%$(number_of_k_values)\ values})")
+        # savefig("sample-complexity-plot-distance.svg")
+    end
+end
+
+
+f_values, k_values, categorical_results = generate_sample_complexity_plot_data(.0001, .1, 100, 10000,
+                                                                               50, 50,
+                                                                               .2)
+f_scaling = 100000
+make_sample_complexity_plot(f_values, k_values, categorical_results, f_scaling, marker_size=3)
+f_values
+
+xticks!(0:.1*f_scaling:10, [string(x/f_scaling) for x in 0:.1*f_scaling:10])
+k_values
+
+
+# I could run this procedure many times and then blend the colors of the plots
+
+# I need to determine how the picture depends on the leaf length (Also: try choosing random leaf lengths within some biologically plausible region, and blending the results)
+
+# One likelihood correspondend for one topology. A different correspondence for a different topology. Three sets of coordinates. p1's, p2's and data u. When p1's are equal to p2's, what set of data does this occur for?

@@ -65,7 +65,6 @@ function compute_R1_or_R2_critical_points_with_homotopy(SITE_PATTERN_DATA,τ)
     return refinedSols
 end
 
-
 """
    get_p(newton_result)
 

@@ -16,7 +16,7 @@ export
 using Distributions
 using HomotopyContinuation
 using LinearAlgebra
-using Random
+# using Random
 using Pipe
 using Plots, ProgressBars, LaTeXStrings # for plotting
 
