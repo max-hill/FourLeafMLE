@@ -18,16 +18,16 @@ Next, we need to install all dependencies, which are listed in
 ```
 activate .
 ```
-to activate the project environment. To install dependencies, run
+to activate the project environment. Next, to fully install all dependencies, run
 ```
 instantiate
 ```
-To exit package mode, press `backspace`.
+Then exit package mode by pressing `backspace`.
 
-Then switch to the directory `FourLeafMLE/src/` and run
+Finally, to load the package, run
 
 ```
-include("FourLeafMLE.jl")
+include("src/FourLeafMLE.jl")
 using .FourLeafMLE
 ```
 
