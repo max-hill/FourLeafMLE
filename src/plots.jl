@@ -414,15 +414,15 @@ function make_sample_complexity_plot(f_values, k_values, categorical_data, f_sca
 end
 
 
-f_values, k_values, categorical_results = generate_sample_complexity_plot_data(.0001, .1, 100, 10000,
-                                                                               50, 50,
-                                                                               .2)
-f_scaling = 100000
-make_sample_complexity_plot(f_values, k_values, categorical_results, f_scaling, marker_size=3)
-f_values
+# f_values, k_values, categorical_results = generate_sample_complexity_plot_data(.0001, .1, 100, 10000,
+#                                                                                50, 50,
+#                                                                                .2)
+# f_scaling = 100000
+# make_sample_complexity_plot(f_values, k_values, categorical_results, f_scaling, marker_size=3)
+# f_values
 
-xticks!(0:.1*f_scaling:10, [string(x/f_scaling) for x in 0:.1*f_scaling:10])
-k_values
+# xticks!(0:.1*f_scaling:10, [string(x/f_scaling) for x in 0:.1*f_scaling:10])
+# k_values
 
 
 # I could run this procedure many times and then blend the colors of the plots
