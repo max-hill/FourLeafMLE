@@ -16,7 +16,7 @@ Next, we need to install all dependencies, which are listed in
 [Project.toml](Project.toml). To do this, open a Julia session with working directory to `/FourLeafMLE`. Press `]` to enter the package REPL, and run
 
 ```
-activate /path/to/FourLeafMLE/
+activate .
 ```
 to activate the project environment. To install dependencies, run
 ```
