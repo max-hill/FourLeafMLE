@@ -15,8 +15,7 @@ git clone https://github.com/max-hill/FourLeafMLE.git
 Next, open a Julia session with working directory `/FourLeafMLE` by running
 
 ```
-cd FourLeafMLE
-julia
+cd FourLeafMLE; julia
 ```
 
 Press `]` to enter the package REPL, and then run
