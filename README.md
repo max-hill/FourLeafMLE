@@ -12,19 +12,24 @@ To get started, first clone this repository by running the following command fro
 git clone https://github.com/max-hill/FourLeafMLE.git
 ```
 
-Next, we need to install all dependencies, which are listed in
-[Project.toml](Project.toml). To do this, open a Julia session with working directory to `/FourLeafMLE`. Press `]` to enter the package REPL, and run
+Next, open a Julia session with working directory `/FourLeafMLE` by running
+
+```
+cd FourLeafMLE
+julia
+```
+
+Press `]` to enter the package REPL, and then run
 
 ```
 activate .
-```
-to activate the project environment. Next, to fully install all dependencies, run
-```
 instantiate
 ```
-Then exit package mode by pressing `backspace`.
 
-Finally, to load the package, run
+This will activate the project environment and install all dependencies, which are listed in
+[Project.toml](Project.toml). This will likely take several minutes. 
+
+After installing dependencies, exit package REPL by pressing `backspace`, and then load the package by running
 
 ```
 include("src/FourLeafMLE.jl")
