@@ -17,8 +17,8 @@ export
 
 using Distributions
 using HomotopyContinuation
-using LinearAlgebra
-using Random
+using LinearAlgebra # for matrix multiplication
+using Random # for permutation function in tests
 using Pipe
 using Plots, ProgressBars, LaTeXStrings # for plotting
 
