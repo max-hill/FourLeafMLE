@@ -18,17 +18,16 @@ Next, open a Julia session with working directory `/FourLeafMLE` by running
 cd FourLeafMLE; julia
 ```
 
-Press `]` to enter the package REPL, and then run
+Next we'll activate the project environment and install all dependencies, which are listed in
+[Project.toml](Project.toml). This will likely take several minutes:
 
+``` 
+Using Pkg
+Pkg.activate(".")
+Pkg.instantiate()
 ```
-activate .
-instantiate
-```
 
-This will activate the project environment and install all dependencies, which are listed in
-[Project.toml](Project.toml). This will likely take several minutes. 
-
-After installing dependencies, exit package REPL by pressing `backspace`, and then load the package by running
+Finally, load the package by running
 
 ```
 include("src/FourLeafMLE.jl")
@@ -40,7 +39,8 @@ homotopy continuation). Once it finishes, you'll be able to run the functions
 in the export list of [FourLeafMLE.jl](/src/FourLeafMLE.jl). 
 
 
-For example, if the data takes the form of a site pattern frequency vector `[123,43,54,83,21,32,24,51]`, we can perform maximum likelihood estimation by running the following function:
+For example, if the data takes the form of a site pattern frequency vector `[123,43,54,83,21,32,24,51]`,
+we can perform maximum likelihood estimation by running the following function:
 
 ```
 fourLeafMLE([123,43,54,83,21,32,24,51])
