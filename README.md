@@ -22,7 +22,7 @@ Next we'll activate the project environment and install all dependencies, which 
 [Project.toml](Project.toml). This will likely take several minutes:
 
 ``` 
-Using Pkg
+using Pkg
 Pkg.activate(".")
 Pkg.instantiate()
 ```
