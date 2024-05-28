@@ -90,7 +90,7 @@ listMaxima(SITE_PATTERN_DATA)
 """
 function fourLeafMLE(SITE_PATTERN_DATA)
     "Attempt to return the global maxima."
-    test_data_genericity(SITE_PATTERN_DATA) || error("Data does not satisfy genericity conditions")
+    test_data_genericity(SITE_PATTERN_DATA) || throw(DomainError(SITE_PATTERN_DATA, "Data does not satisfy genericity conditions"))
     tmp = [compute_R1_and_R2_MLE(SITE_PATTERN_DATA);
            compute_R3_MLE(SITE_PATTERN_DATA); compute_R4_MLE(SITE_PATTERN_DATA);
            compute_R5_MLE(SITE_PATTERN_DATA); compute_R6_MLE(SITE_PATTERN_DATA);
