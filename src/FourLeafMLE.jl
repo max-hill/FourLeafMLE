@@ -15,7 +15,6 @@ export
     test_data_genericity,
     Multinomial # from the package Distributions
 
-
 using Distributions
 using HomotopyContinuation
 using LinearAlgebra # for matrix multiplication
