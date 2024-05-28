@@ -138,8 +138,8 @@ function compute_R1_and_R2_MLE(SITE_PATTERN_DATA)
             # Save the result for critical point p into R1_output
             push!(R1_output,p_result)
         end
-        return R1_output
     end
+    return R1_output
 end
 
 
