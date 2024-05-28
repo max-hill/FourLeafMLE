@@ -4,7 +4,7 @@
 ##______________________________________________________________________________
 
 using Test, Distributions, Random
-using .FourLeafMLE
+using FourLeafMLE
 include("test_functions.jl")
 
 @testset "Is non-generic data handled correctly?" begin
