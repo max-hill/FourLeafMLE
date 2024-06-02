@@ -14,3 +14,11 @@ Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 ProgressBars = "49802e3a-d2f1-5c88-81d8-b72133a6f568"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
+
+[compat]
+Distributions = "v0.25.108"
+HomotopyContinuation = "v2.9.3"
+LaTeXStrings = "v1.3.1"
+Pipe = "v1.3.0"
+Plots = "v1.40.4"
+ProgressBars = "v1.5.1"

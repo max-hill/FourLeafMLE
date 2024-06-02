@@ -207,11 +207,12 @@ using Pkg; Pkg.activate(".")
 Pkg.test("FourLeafMLE")
 ```
 
-For some reason the tests take a lot of time (about 20-30 min). Note that it also returns a harmless
-warning about the use of `LU`. Most of the tests involve generating random 4-leaf trees and then
-performing maximum likelihood estimation on each tree using the model as data. When a test is passed,
-that means the randomly-generated trees were all (or almost all) correctly estimated. Some of these tests
-will fail on occasion due to approximation errors in the arithmetic. Additional commentary can be found in  [test/runtests.jl](test/runtests.jl)
+Note this will return a (harmless) deprecation warning about the use of `LU`. Most of the tests involve
+generating random 4-leaf trees and then performing maximum likelihood estimation on each tree using the
+model as data. When a test is passed, that means the randomly-generated trees were all (or almost all)
+correctly estimated. Some of these tests will fail on occasion due to approximation errors in the
+arithmetic. Additional commentary and details about failure rates and causes can be found in
+[test/runtests.jl](test/runtests.jl)
 
 # Citations
 
