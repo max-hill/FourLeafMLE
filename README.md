@@ -14,13 +14,13 @@
 To get started, first clone this repository by running the following command from a terminal:
 
 ```
-git clone https://github.com/max-hill/FourLeafMLE.git
+git clone https://github.com/max-hill/FourLeafMLE.jl.git
 ```
 
-Next, open a Julia session with working directory `/FourLeafMLE` by running
+Next, open a Julia session with working directory `/FourLeafMLE.jl` by running
 
 ```
-cd FourLeafMLE; julia
+cd FourLeafMLE.jl; julia
 ```
 
 Next we'll activate the project environment and install all dependencies, which are listed in
