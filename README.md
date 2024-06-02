@@ -1,8 +1,13 @@
 # Package summary
-
-  This Julia package solves a global optimization problem to perform statistical
-  inference using DNA sequence alignment data for quartets (i.e., 4-leaf trees) under the
-  Cavender-Farris-Neyman model from phylogenetics.
+  
+  This Julia package implements statistical inference using maximum likelihood estimation (MLE) to
+  estimate a 4-leaf phylogenetic tree from DNA sequence data. The assumed model is the
+  Cavendar-Farris-Neyman (CFN) model from phylogenetics.
+  
+  Unlike other methods, the implementation in this package does not rely on a heuristic search to solve
+  the global optimization problem. Instead, the solution to the MLE problem is obtained through direct
+  computation of the critical points of the likelihood function using both analytical methods as well as
+  tools from numerical algebraic geometry.
 
 # Quickstart instructions
 
