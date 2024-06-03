@@ -1,3 +1,5 @@
+__precompile__()
+
 ###_____________________________________________________________________________
 ##
 ## Auxilliary functions for the homotopy continuation step
