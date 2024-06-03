@@ -82,7 +82,7 @@ this inference.
 
 A standard approach to inferring a phylogenetic tree is to use maximum
 likelihood estimation. By summarizing data as a vector $(u_1,\dots,u_n)$
-of counts, the goal is to maximum the likelihood of the data. In other
+of counts, the goal is to maximize the likelihood of the data. In other
 words, we seek the value of $\theta$ that maximizes
 $p_1^{u_1}\cdots p_n^{u_n}$ where $p_i$ is the probability of observing
 event $i$ and each $p_i$ depends on the parameters $\theta$ of the
