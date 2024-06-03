@@ -11,17 +11,18 @@
 
 # Quickstart instructions
 
-Open a julia REPL by running the command `julia` or `julia --threads=auto` from the command line. Then run
-
+Open a Julia REPL from the command line by running
 ```
-using Pkg; Pkg.add(url="https://github.com/max-hill/FourLeafMLE.jl.git")
+julia --threads=auto
+```
+Then to load the package in Julia run
+```
+using Pkg
+Pkg.add(url="https://github.com/max-hill/FourLeafMLE.jl.git")
 using FourLeafMLE
-
 ```
-
-
 This step may take a few minutes to install necessary dependencies and perform some pre-processing
-(computing start soultions for homotopy continuation). Once it finishes you'll be able to run all the
+(to compute start solutions for homotopy continuation). Once it finishes you'll be able to run all the
 functions in the export list of [FourLeafMLE.jl](/src/FourLeafMLE.jl).
 
 <!-- To get started, first clone this repository by running the following command from a terminal: -->
