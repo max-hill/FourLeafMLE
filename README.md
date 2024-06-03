@@ -68,7 +68,7 @@ common ancestors, and leaves representing extant taxa. The edge weights,
 or *branch lengths* represent some measure of evolutionary time (usually
 expected number of mutations per site), and the tree *topology*
 describes clade structure of the taxa. For instance,
-[Figure 1](#fig1). has four leaves that are labeled
+[Figure 1](#fig1) has four leaves that are labeled
 in such a way to indicate species $1$ and $2$ have a more recent common
 ancestor with one another than with species $3$ or $4$.
 
