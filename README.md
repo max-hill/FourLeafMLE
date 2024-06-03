@@ -15,7 +15,7 @@ Open a Julia REPL from the command line by running
 ```
 julia --threads=auto
 ```
-Then to load the package in Julia run
+Then, to load the package, run
 ```
 using Pkg
 Pkg.add(url="https://github.com/max-hill/FourLeafMLE.jl.git")
