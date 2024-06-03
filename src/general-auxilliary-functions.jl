@@ -1,5 +1,3 @@
-__precompile__()
-
 θ_index_pair(i,j)=return "θ$(min(i,j))$(max(i,j))"
 
 """

@@ -1,5 +1,3 @@
-__precompile__()
-
 ###_____________________________________________________________________________
 ##
 ## Main functions for computing the MLE or a list of local maxima
