@@ -11,37 +11,50 @@
 
 # Quickstart instructions
 
-To get started, first clone this repository by running the following command from a terminal:
+Open a julia REPL by running the command `julia` or `julia --threads=auto` from the command line. Then run
 
 ```
-git clone https://github.com/max-hill/FourLeafMLE.jl.git
-```
-
-Next, open a Julia session with working directory `/FourLeafMLE.jl` by running
+using Pkg; Pkg.add(url="https://github.com/max-hill/FourLeafMLE.jl.git")
+using FourLeafMLE
 
 ```
-cd FourLeafMLE.jl; julia
-```
 
-Next we'll activate the project environment and install all dependencies, which are listed in
-[Project.toml](Project.toml). This will likely take several minutes:
 
-``` 
-using Pkg
-Pkg.activate(".")
-Pkg.instantiate()
-```
+This step may take a few minutes to install necessary dependencies and perform some pre-processing
+(computing start soultions for homotopy continuation). Once it finishes you'll be able to run all the
+functions in the export list of [FourLeafMLE.jl](/src/FourLeafMLE.jl).
 
-Finally, load the package by running
+<!-- To get started, first clone this repository by running the following command from a terminal: -->
 
-```
-include("src/FourLeafMLE.jl")
-using .FourLeafMLE
-```
+<!-- ``` -->
+<!-- git clone https://github.com/max-hill/FourLeafMLE.jl.git -->
+<!-- ``` -->
 
-This will take a moment of pre-processing (to compute start solutions for
-homotopy continuation). Once it finishes, you'll be able to run the functions
-in the export list of [FourLeafMLE.jl](/src/FourLeafMLE.jl). 
+<!-- Next, open a Julia session with working directory `/FourLeafMLE.jl` by running -->
+
+<!-- ``` -->
+<!-- cd FourLeafMLE.jl; julia -->
+<!-- ``` -->
+
+<!-- Next we'll activate the project environment and install all dependencies, which are listed in -->
+<!-- [Project.toml](Project.toml). This will likely take several minutes: -->
+
+<!-- ```  -->
+<!-- using Pkg -->
+<!-- Pkg.activate(".") -->
+<!-- Pkg.instantiate() -->
+<!-- ``` -->
+
+<!-- Finally, load the package by running -->
+
+<!-- ``` -->
+<!-- include("src/FourLeafMLE.jl") -->
+<!-- using .FourLeafMLE -->
+<!-- ``` -->
+
+<!-- This will take a moment of pre-processing (to compute start solutions for -->
+<!-- homotopy continuation). Once it finishes, you'll be able to run the functions -->
+<!-- in the export list of [FourLeafMLE.jl](/src/FourLeafMLE.jl).  -->
 
 
 For example, if the data takes the form of a site pattern frequency vector `[123,43,54,83,21,32,24,51]`,
