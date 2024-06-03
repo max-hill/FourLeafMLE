@@ -15,51 +15,25 @@ Open a Julia REPL from the command line by running
 ```
 julia --threads=auto
 ```
-Then, to load the package, run
+Then, to get the package, run
 ```
 using Pkg
 Pkg.add(url="https://github.com/max-hill/FourLeafMLE.jl.git")
-using FourLeafMLE
 ```
 This step may take a few minutes to install necessary dependencies and perform some pre-processing
-(to compute start solutions for homotopy continuation). Once it finishes you'll be able to run all the
-functions in the export list of [FourLeafMLE.jl](/src/FourLeafMLE.jl).
+(to compute start solutions for homotopy continuation).
 
-<!-- To get started, first clone this repository by running the following command from a terminal: -->
+Finally, to load the package, run
+```
+using FourLeafMLE
+```
 
-<!-- ``` -->
-<!-- git clone https://github.com/max-hill/FourLeafMLE.jl.git -->
-<!-- ``` -->
+You can now run all the functions in the export list of [FourLeafMLE.jl](/src/FourLeafMLE.jl). Note
+that the first time you run a function in Julia, it will take some time to precompile.
 
-<!-- Next, open a Julia session with working directory `/FourLeafMLE.jl` by running -->
-
-<!-- ``` -->
-<!-- cd FourLeafMLE.jl; julia -->
-<!-- ``` -->
-
-<!-- Next we'll activate the project environment and install all dependencies, which are listed in -->
-<!-- [Project.toml](Project.toml). This will likely take several minutes: -->
-
-<!-- ```  -->
-<!-- using Pkg -->
-<!-- Pkg.activate(".") -->
-<!-- Pkg.instantiate() -->
-<!-- ``` -->
-
-<!-- Finally, load the package by running -->
-
-<!-- ``` -->
-<!-- include("src/FourLeafMLE.jl") -->
-<!-- using .FourLeafMLE -->
-<!-- ``` -->
-
-<!-- This will take a moment of pre-processing (to compute start solutions for -->
-<!-- homotopy continuation). Once it finishes, you'll be able to run the functions -->
-<!-- in the export list of [FourLeafMLE.jl](/src/FourLeafMLE.jl).  -->
-
-
-For example, if the data takes the form of a site pattern frequency vector `[123,43,54,83,21,32,24,51]`,
-we can perform maximum likelihood estimation by running the following function:
+As an example, suppose our data take the form of the site pattern frequency vector 
+`[123,43,54,83,21,32,24,51]`. Then we can perform maximum likelihood estimation on this data by by
+running
 
 ```
 fourLeafMLE([123,43,54,83,21,32,24,51])
