@@ -3,10 +3,11 @@
 ## Felsenstein zone plot (axes in evolutionary distance)
 ##______________________________________________________________________________
 """
-   generate_averaged_classification_plot_data(sequence_length,
-                                              m,
-                                              lower_x, lower_y, upper_x, upper_y,
-                                              number_of_x_values, number_of_y_values; Hadamard_mode=false)
+    generate_averaged_classification_plot_data(sequence_length,
+                                               m,
+                                               lower_x, lower_y, upper_x, upper_y,
+                                               number_of_x_values, number_of_y_values;
+                                               Hadamard_mode=false)
 
 
 # Description
@@ -51,15 +52,15 @@ function generate_averaged_classification_plot_data(sequence_length, m, lower_x,
 end
 
 """
-  make_averaged_classification_plot(sequence_length, 
-                                           x_values, y_values, scores;
-                                           topology=nothing,
-                                           marker_size=nothing,
-                                           Hadamard_mode=false)
+    make_averaged_classification_plot(sequence_length,
+                                      x_values, y_values, scores;
+                                      topology=nothing,
+                                      marker_size=nothing,
+                                      Hadamard_mode=false)
 
 # Description
 
-Using data from generate_averaged_classification_plot_data, makes a Felsenstein plot with points
+Using data from `generate_averaged_classification_plot_data`, makes a Felsenstein plot with points
 representing the propotion of samples whose MLE is concordant with the specified topology.
 
 # Output
@@ -130,15 +131,15 @@ end
 
 """
 
-   `generate_classification_plot_data(sequence_length,
+    generate_classification_plot_data(sequence_length,
                                       lower_x, lower_y, upper_x, upper_y,
                                       number_of_x_values, number_of_y_values;
-                                      Hadamard_mode=false)'
+                                      Hadamard_mode=false)
 
 # Description
 For each pair (x,y) with x and y within some user-specified range, do the following:
 
-  (1) generate a single datapoint of length `sequence_length' bp from a quartet tree model with
+  (1) generate a single datapoint of length `sequence_length` bp from a quartet tree model with
   topology 12|34 such that the branch lengths of leaves 1 and 3 are y and all other branch lengths
   are x,
 
@@ -151,22 +152,22 @@ Then save the pair (x,y) together with the inferred compatible topology classifi
 
 # Arguments
 
-  - `sequence_length' : length in bp of the data to be generated for each parameter regime (x,y)
+  - `sequence_length` : length in bp of the data to be generated for each parameter regime (x,y)
 
-  - `lower_x, lower_y, upper_x, upper_y' : these specify the lower and upper bounds for the values
+  - `lower_x`, `lower_y`, `upper_x`, `upper_y` : these specify the lower and upper bounds for the values
                                            of x and y
 
-  - `number_of_x_values, number_of_y_values' : the number of (evenly space) values to be chosen and
+  - `number_of_x_values, number_of_y_values` : the number of (evenly space) values to be chosen and
                                                sampled from the interval with specified upper and
                                                lower bounds. This determines the step size and hence
                                                the resolution of the plot; higher values will result
                                                in a plot that is less pixelated but will take longer
                                                to produce.
 
-  - `Hadamard_mode' : Optional parameter which determines which of 2 modes the function is run in.
-                      When `Hadamard_mode = false', x and y are interpreted as being branch lengths
+  - `Hadamard_mode` : Optional parameter which determines which of 2 modes the function is run in.
+                      When `Hadamard_mode = false`, x and y are interpreted as being branch lengths
                       measured in expected number of mutations per site (i.e., evolutionary
-                      distance). When `Hadamard_mode = true', x and y are interpreted as being
+                      distance). When `Hadamard_mode = true1, x and y are interpreted as being
                       Hadamard edge parameters, (i.e., which are obtained by applying the function d
                       -> exp(-2d) to the evolutionary distances).
 
@@ -202,32 +203,33 @@ end
 
 """
 
-   `make_classification_plot(sequence_length,
-                             x_values, y_values, categorical_data;
+    make_classification_plot(sequence_length,
+                             x_values, y_values,
+                             categorical_data;
                              marker_size=nothing,
-                             Hadamard_mode=false)'
+                             Hadamard_mode=false)
 
 # Description
 
-Makes a plot using data obtained from the function `generate_classification_plot_data'.
+Makes a plot using data obtained from the function `generate_classification_plot_data`.
 
 # Arguments
 
-  - `sequence_length' : the size of the data, in base pairs, to be generated for each parameter
+  - `sequence_length` : the size of the data, in base pairs, to be generated for each parameter
                        regime (i.e., for each point on the plot)
 
-  - `x_values, y_values, categorical_data' : the output of `generate_classification_plot_data'.
+  - `x_values`, `y_values`, `categorical_data` : the output of `generate_classification_plot_data`.
 
-  - `marker_size' : Optional parameter. Determines the size of the squares made by the scatter plot.
+  - `marker_size` : Optional parameter. Determines the size of the squares made by the scatter plot.
                     Depending on the step size (which is automatically deduced from the vectors
-                    `x_values' and `y_values'), this may need to be adjusted. Ideally, `marker_size'
+                    `x_values` and `y_values`), this may need to be adjusted. Ideally, `marker_size`
                     should be large enough that the squares are visible and are almost or exactly
                     adjacent, but not so large that they overlap. If no value is supplied by the
                     user, a sensible default will be chosen, which is 171 divided by
-                    max(number_of_x_values,number_of_y_values).
+                    `max(number_of_x_values,number_of_y_values)`.
 
-  - `Hadamard_mode' : Optional parameter. Specifes the plotting mode. If true, then `x_values' and
-                      `y_values' are interpreted as Hadamard edge parameters. If false, then they
+  - `Hadamard_mode` : Optional parameter. Specifes the plotting mode. If true, then `x_values` and
+                      `y_values` are interpreted as Hadamard edge parameters. If false, then they
                       are interpreted to be branch length distances measured in expected number of
                       mutations per site. This affects the axes and labels of the plot. In order to
                       obtain good-looking plots, the value of this variable should be the same as
