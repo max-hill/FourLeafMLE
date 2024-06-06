@@ -241,6 +241,15 @@ Makes a plot using data obtained from the function `generate_classification_plot
 A plot like thos shown in the abstract. The plot is saved as an .svg file to
 "plots/hadamard-plot.svg".
 
+# Example
+
+To replicate the figure in the abstract, run
+
+```
+    x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, .99, .99, 300, 300, Hadamard_mode=true)
+    make_classification_plot(sequence_length, x_values, y_values, categorical_results, Hadamard_mode=true);
+```
+
 """
 function make_classification_plot(sequence_length,
                                   x_values, y_values, categorical_data;
@@ -267,7 +276,7 @@ function make_classification_plot(sequence_length,
     default(fontfamily="Computer Modern")
     p = plot(legend = :outertopright)
     for category in ["τ=1", "τ=2", "τ=3", "Any topology", "τ=1,2", "τ=1,3", "τ=2,3"]
-        mask = categorical_results .== category
+        mask = categorical_data .== category
         scatter!(p, x_values[mask], y_values[mask], c = color_mapping[category], label = label_mapping[category],
                  markershape=:square, markersize=marker_size, markerstrokewidth=0)
     end
@@ -276,12 +285,12 @@ function make_classification_plot(sequence_length,
         plot!(p, aspect_ratio=:equal, xlims=(0, 1), ylims=(0, 1),
               xlabel=L"\theta_x \quad \textrm{(%$(number_of_x_values)\ values})",
               ylabel=L"\theta_y \quad \textrm{(%$(number_of_y_values)\ values})")
-        savefig("plots/classification-plot-hadamard-k$(sequence_length)-resolution$(number_of_x_values)x$(number_of_y_values)-marker$(marker_size).svg")
+        savefig("classification-plot-hadamard-k$(sequence_length)-resolution$(number_of_x_values)x$(number_of_y_values)-marker$(marker_size).svg")
     else
         plot!(p, aspect_ratio=:equal, xlims=(lower_x-dx, upper_x+dx), ylims=(lower_y-dy, upper_y+dy),
               xlabel=L"d_x \quad \textrm{(%$(number_of_x_values)\ values})",
               ylabel=L"d_y \quad \textrm{(%$(number_of_y_values)\ values})")
-        savefig("plots/classification-plot-distance-k$(sequence_length)-resolution$(number_of_x_values)x$(number_of_y_values)-marker$(marker_size).svg")
+        savefig("classification-plot-distance-k$(sequence_length)-resolution$(number_of_x_values)x$(number_of_y_values)-marker$(marker_size).svg")
     end
 end
 
@@ -296,7 +305,6 @@ end
 # x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, .99, .99, 100, 100, Hadamard_mode=true)
 # make_classification_plot(sequence_length, x_values, y_values, categorical_results; Hadamard_mode=true) # uses default marker size = 171/100 = 1.71.
 # make_classification_plot(sequence_length, x_values, y_values, categorical_results; marker_size = 1, Hadamard_mode=true) # observe the effect of decreasing marker_size
-
 
 # ## Example Hadamard Plot # 2 -- Done
 # sequence_length=1000
