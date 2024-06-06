@@ -12,6 +12,10 @@
 
 # Description
 
+Experimental function (along with `make_averaged_classification_plot`) to 
+produce a color-averaged Felsentstein plot representing many replicates at 
+each pixel.
+
 """
 function generate_averaged_classification_plot_data(sequence_length, m, lower_x, lower_y, upper_x, upper_y, number_of_x_values, number_of_y_values; Hadamard_mode=false)
     # Intialize the vectors which will be used to store the results:
@@ -351,6 +355,18 @@ end
 ## Sample complexity plot 
 ##______________________________________________________________________________
 
+
+"""
+    generate_sample_complexity_plot_data
+
+# Description
+Experimental function to ascertain the relationship between the observed long-
+branch attraction effects, and known sample complexity lower bounds on the
+amount of data required for high probability of correct inference.
+
+# Warning
+This function is experimental and not fully tested.
+"""
 function generate_sample_complexity_plot_data(lower_f, upper_f, lower_k, upper_k,
                                               number_of_f_values, number_of_k_values,
                                               leaf_length;
@@ -382,6 +398,17 @@ function generate_sample_complexity_plot_data(lower_f, upper_f, lower_k, upper_k
     return [f_values,k_values,categorical_results]
 end
 
+"""
+    make_sample_complexity_plot
+
+# Description
+Experimental function to ascertain the relationship between the observed long-
+branch attraction effects, and known sample complexity lower bounds on the
+amount of data required for high probability of correct inference.
+
+# Warning
+This function is experimental and not fully tested.
+"""
 function make_sample_complexity_plot(f_values, k_values, categorical_data, f_scaling; 
                                   marker_size=nothing, Hadamard_mode=false)
     # Determine plot bounds and step size from the data:
