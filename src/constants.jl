@@ -70,7 +70,7 @@ function compute_all_complex_critical_points(τ)
     Λₚ=Diagonal(p)
     scoreEquations = System([SITE_PATTERN_DATA-Λₚ*Jacobian'*λ;C],variables=[p;λ])
     result = solve(scoreEquations, threading=true,
-                   show_progress = true)
+                   show_progress = false)
     # Next check if all the critical points were recovered. If so, save the
     # results and exit the loop.
     (τ ∈ 1:3) && (length(solutions(result)) == 14) && return [SITE_PATTERN_DATA,result]
