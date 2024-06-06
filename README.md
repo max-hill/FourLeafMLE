@@ -157,7 +157,7 @@ critical points otherwise.
 # Putting into practice: Visualizing the geometry of data
 
 Our method is fast. On a desktop machine with 12 i5-10400 CPUs
-(2.90GHz), the `fourLeafMLE` solves on average 50 global optimization
+(2.90GHz), the `fourLeafMLE` solves on average 7.8 global optimization
 problems per second. This is sufficiently fast to create high-quality
 visualizations of the geometry of the maximum likelihood problem. 
 
@@ -170,7 +170,7 @@ of $90,000$ points, each representing a choice of Hadamard edge length
 parameters $\theta_x,\theta_y$ (see [12]) for the
 above tree:
 <figure>
-  <img src="plots/classification-plot-hadamard-k1000-resolution300x300-marker0.57.png" alt="grid-plot">
+  <img src="plots/classification-plot-hadamard-k1000-resolution300x300-marker0.57--fixed.png" alt="grid-plot">
 <figcaption> 
   Figure 1. MLE topologies for random data, represented by color. 
   For each point, maximum likelihood estimation was performed using 
