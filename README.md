@@ -15,15 +15,14 @@ Open a Julia REPL from the command line by running
 ```
 julia --threads=auto
 ```
-Then, to get the package, run
-```
-using Pkg
-Pkg.add(url="https://github.com/max-hill/FourLeafMLE.jl.git")
-```
-This step may take a few minutes to install necessary dependencies and perform some pre-processing
-(to compute start solutions for homotopy continuation).
+The optional flag `--threads=auto` is recommended for best performance. (Once Julia is running, you can
+check the number of threads with `Threads.nthreads()`.)
 
-Finally, to load the package, run
+Then, to get the package and all dependencies, run
+```
+using Pkg; Pkg.add("FourLeafMLE")
+```
+This step may take a few minutes. Then, to load the package, run
 ```
 using FourLeafMLE
 ```
@@ -52,9 +51,7 @@ functions, see the function docstrings, for example by running
 @doc fourLeafMLE
 ```
 
-**Tip:** For better performance, run Julia with multiple threads by launching it
-with `julia -t auto`. You can check the number of threads with
-`Threads.nthreads()`
+
 
 
 # Background: tree topologies and the tree of life
