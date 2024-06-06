@@ -11,18 +11,20 @@
 
 # Quickstart instructions
 
-Open a Julia REPL from the command line by running
+First, a Julia REPL from the command line by running
 ```
 julia --threads=auto
 ```
 The optional flag `--threads=auto` is recommended for best performance. (Once Julia is running, you can
 check the number of threads with `Threads.nthreads()`.)
 
-Then, to get the package and all dependencies, run
+Second, to get the package and all dependencies, run
 ```
 using Pkg; Pkg.add("FourLeafMLE")
 ```
-This step may take a few minutes. Then, to load the package, run
+This step may take a few minutes. 
+
+Finally, load the package by running
 ```
 using FourLeafMLE
 ```
@@ -31,7 +33,7 @@ You can now run all the functions in the export list of [FourLeafMLE.jl](/src/Fo
 that the first time you run a function in Julia, it will take some time to precompile.
 
 As an example, suppose our data take the form of the site pattern frequency vector 
-`[123,43,54,83,21,32,24,51]`. Then we can perform maximum likelihood estimation on this data by by
+`[123,43,54,83,21,32,24,51]`. We can perform maximum likelihood estimation on this data by by
 running
 
 ```
