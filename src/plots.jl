@@ -249,6 +249,7 @@ To replicate the figure in the abstract, run
     x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, .99, .99, 300, 300, Hadamard_mode=true)
     make_classification_plot(sequence_length, x_values, y_values, categorical_results, Hadamard_mode=true);
 ```
+This will save an .svg image of the plot to the working directory.
 
 """
 function make_classification_plot(sequence_length,
