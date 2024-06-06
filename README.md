@@ -11,7 +11,7 @@
 
 # Quickstart instructions
 
-First, a Julia REPL from the command line by running
+First, open a Julia REPL from the command line by running
 ```
 julia --threads=auto
 ```
