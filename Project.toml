@@ -2,7 +2,7 @@ name = "FourLeafMLE"
 uuid = "5790dc55-b552-4dea-a575-4088ca23464b"
 license = "MIT"
 authors = ["Max Hill <max.hill1@ucr.edu>", "Jose Israel Rodriguez <jose@math.wisc.edu"]
-version = "1.0.0"
+version = "1.0.1"
 
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
