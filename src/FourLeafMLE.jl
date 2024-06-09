@@ -33,4 +33,3 @@ end
 
 # Note to self: to run Julia with multiple threads in the emacs REPL, first run
 # (setenv "JULIA_NUM_THREADS" "12").
-

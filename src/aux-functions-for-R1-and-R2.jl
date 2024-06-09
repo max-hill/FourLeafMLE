@@ -129,11 +129,12 @@ function compute_R1_and_R2_MLE(SITE_PATTERN_DATA)
             p_result = (if τ in [1,2,3]
                             ((τ ∈ 1:3) && any(≥(1-tol),θ)) ?
                                 [-Inf, "R1", [], θ, "Invalid critical point for R1 with τ=$τ due to negative or length-zero branch(s)"] :
-                                [logL, "R1", [τ], θ, "θ1, θ2, θ3, θ4, θ5", "binary quartet with topology τ=$τ"]
+                                [logL, "R1", [τ], θ, "θ1, θ2, θ3, θ4, θ5",
+                                 "binary quartet with topology τ=$(["12|34", "13|24", "14|23"][τ]) and edge parameters (θ₁,...,θ₅) = ("*"$(θ[1])"*",...,"*"$(θ[5])"*")"]
                         elseif τ == 4
                             (any(≥(1-tol),θ[1:4]) ?
                                 [-Inf, "R2", [], θ, "Invalid critical point for R2 due to negative or length-zero branch(s)"] :
-                                [logL, "R2", [1,2,3], θ[1:4], "θ₁, θ₂, θ₃, θ₄", [], "star quartet"])
+                                [logL, "R2", [1,2,3], θ[1:4], "θ₁, θ₂, θ₃, θ₄", [], "star quartet with edge parameters (θ₁,...,θ₄) = ("*"$(θ[1])"*",...,"*"$(θ[4])"*")"])
                         end)
             # Save the result for critical point p into R1_output
             push!(R1_output,p_result)
@@ -141,6 +142,5 @@ function compute_R1_and_R2_MLE(SITE_PATTERN_DATA)
     end
     return R1_output
 end
-
 
 

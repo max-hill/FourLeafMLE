@@ -64,9 +64,9 @@ function compute_R3_MLE(SITE_PATTERN_DATA)
                 end
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,τ))
                 maximizer = [logL, "R3", [τ],
-                             [B_ij, sqrt(B_jk*B_jl/B_kl), sqrt(B_jk*B_kl/B_jl), sqrt(B_jl*B_kl/B_jk)],
+                             [θ[i], θ[5], θ[k], θ[l]]
                              "θ$i,θ_internal,θ$k,θ$l",
-                             labels, "$i -- $j --< $k, $l"]
+                             labels, "Y-shaped tree  ($i -- $j --< $k, $l) with 4 edge parameters (θ$i,θ_internal,θ$k,θ$l) = ($(θ[i]),...,$(θ[l]))"]
                 push!(R3_output,maximizer)
             end
         end
