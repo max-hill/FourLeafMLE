@@ -64,9 +64,10 @@ function compute_R3_MLE(SITE_PATTERN_DATA)
                 end
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,τ))
                 maximizer = [logL, "R3", [τ],
-                             [θ[i], θ[5], θ[k], θ[l]]
+                             [θ[i], θ[5], θ[k], θ[l]],
                              "θ$i,θ_internal,θ$k,θ$l",
-                             labels, "Y-shaped tree  ($i -- $j --< $k, $l) with 4 edge parameters (θ$i,θ_internal,θ$k,θ$l) = ($(θ[i]),...,$(θ[l]))"]
+                             labels,
+                             "Y-shaped tree  ($i -- $j --< $k, $l) with 4 edge parameters (θ$i,θ_internal,θ$k,θ$l) = ($(θ[i]),...,$(θ[l]))"]
                 push!(R3_output,maximizer)
             end
         end
@@ -92,9 +93,10 @@ function compute_R4_MLE(SITE_PATTERN_DATA)
             if all(<(1-100000*eps()),[θ[j],θ[k],θ[l]])
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,1))
                 maximizer = [logL, "R4", [1,2,3],
-                             [B_ij, B_ik, B_il],
+                             [θ[j], θ[k], θ[l]],
                              "θ$j,θ$k,θ$l",
-                             labels, "$j $k $l tripod with internal node $i"]
+                             labels,
+                             "Claw graph with internal node $i and leaves $j $k $l. The 3 edge parameters are (θ$j,θ$k,θ$l) = ($(θ[j]), $(θ[k]), $(θ[l]))"]
                 # The maximizer is (θ_j,θ_k,θ_l) = (B_ij,B_ik,B_il), provided that these are all in (0,1)
                 push!(R4_output,maximizer)
             end
@@ -102,7 +104,6 @@ function compute_R4_MLE(SITE_PATTERN_DATA)
     end
     return R4_output
 end
-
 
 ## Compute maximizers in class R5 - DONE
 # [i j k l], picture: i--j--k--l, so there are 3 edge parameters: h_i, h_l, h_{j,k}
@@ -131,8 +132,10 @@ function compute_R5_MLE(SITE_PATTERN_DATA)
                 end
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,τ))
                 maximizer = [logL, "R5", [τ],
-                             [B_ij, B_jk, B_kl], "θ$i,"*θ_index_pair(j,k)*",θ$l",
-                             labels, "$i--$j--$k--$l"]
+                             [θ[i], θ[5], θ[l]],
+                             "θ$i,"*θ_index_pair(j,k)*",θ$l",
+                             labels,
+                             "Line ($i--$j--$k--$l) with edge parameters (θ$i, "*θ_index_pair(j,k)*", θ$l) = ($(θ[i]), $(θ[5]), $(θ[l]))"]
                 # The maximizer is (θ_j,θ_ik,θ_l) = (B_ij,B_ik,B_kl), provided that these are all in (0,1)
                 push!(R5_output,maximizer)
             end
@@ -140,7 +143,6 @@ function compute_R5_MLE(SITE_PATTERN_DATA)
     end
     return R5_output
 end
-
 
 
 
@@ -161,14 +163,17 @@ function compute_R6_MLE(SITE_PATTERN_DATA)
             if all(<(1-100000*eps()),[θ[j],θ[k],θ[l]])
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,1))
                 maximizer=[logL, "R6",  [1,2,3], 
-                           [θ[j], θ[k], θ[l]],"θ$j, θ$k, θ$l",
-                           labels, "leaf $i infinitely far"]
+                           [θ[j], θ[k], θ[l]],
+                           "θ$j, θ$k, θ$l",
+                           labels,
+                           "Infinite {$i}-branch model (i.e., a tripod with 3 leaves $j, $k, $l and an unlabled internal node, with node $i disconnected). Three edge parameters (θ$j, θ$k, θ$l) = ($(θ[j]), $(θ[k]), $(θ[l]))"]
                 push!(R6_output, maximizer)
             end
         end
     end
     return R6_output
 end
+
 
 
 ## compute maximizers in class R7 - DONE
@@ -189,8 +194,10 @@ function compute_R7_MLE(SITE_PATTERN_DATA)
             if all(<(1-100000*eps()),[θ[k],θ[l]])
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,1))
                 maximizer = [logL, "R7", [1,2,3],
-                             [B_jk,B_kl],  θ_index_pair(j,k)*","*θ_index_pair(k,l),
-                             labels,  "leaf $i infinitely far and θ$j=1"]
+                             [B_jk,B_kl],
+                             θ_index_pair(j,k)*","*θ_index_pair(k,l),
+                             labels,
+                             "Degenerate infinite {$i}-branch model: ($j--$k--$l  ·$i) with 2 edge parameters ($(θ_index_pair(j,k)), $(θ_index_pair(k,l))) = ($(B_jk), $(B_kl))"]
                 push!(R7_output,maximizer)
             end
         end
@@ -223,8 +230,9 @@ function compute_R8_MLE(SITE_PATTERN_DATA)
                 end
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,τ))
                 maximizer = [logL, "R8", [τ],
-                             [B_ij, B_kl], θ_index_pair(i,j)*","*θ_index_pair(k,l),
-                             labels,  "$i--$j  $k--$l"]
+                             [B_ij, B_kl],
+                             θ_index_pair(i,j)*","*θ_index_pair(k,l),
+                             labels,  "Two disconnected edges ($i--$j  $k--$l) with edge parameters ($(θ_index_pair(i,j)), $(θ_index_pair(k,l))) = ($(B_ij), $(B_kl))"]
                 # The maximizer is (θ_ij,θ_kl) = (B_ij,B_kl), provided that these are in (0,1)
                 push!(R8_output,maximizer)
             end
@@ -232,7 +240,6 @@ function compute_R8_MLE(SITE_PATTERN_DATA)
     end
     return R8_output
 end
-
 
 
 ## compute maximizers in class R9 - DONE
@@ -251,8 +258,10 @@ function compute_R9_MLE(SITE_PATTERN_DATA)
             if θ[k]<1-100000*eps()
                 logL = SITE_PATTERN_DATA'log.(computeProbabilityVector(θ,1))
                 maximizer = [logL, "R9", [1,2,3],
-                             [B_kl],  θ_index_pair(k,l),
-                             labels,  "leaves $i,$j infinitely far"]
+                             [B_kl],
+                             θ_index_pair(k,l),
+                             labels,
+                             "Infinite {$i},{$j}-model (·$i  ·$j  $k--$l) with edge parameter $(θ_index_pair(k,l)) = $(B_kl). Leaves $i, $j have infinite branch length."]
                 push!(R9_output,maximizer)
             end
         end
@@ -261,11 +270,12 @@ function compute_R9_MLE(SITE_PATTERN_DATA)
 end
 
 
-# compute maximizers in class R10
+
+# compute maximizers in class R10 - DONE
 function compute_R10_MLE(SITE_PATTERN_DATA)
     logL = SITE_PATTERN_DATA'log.(computeProbabilityVector([0,0,0,0,0],1))
     R10_output=[[logL, "R10", [1,2,3],
-                 [], "θ1,θ2,θ3,θ4,θ5", "R10", "all sites independent"]]
+                 [], "θ1,θ2,θ3,θ4,θ5", "R10", "All sites are independent. Graph is represented by four disconneceted nodes 1 2 3 4 with no edges."]]
     return R10_output
 end
 
