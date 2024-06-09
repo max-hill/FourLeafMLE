@@ -46,16 +46,26 @@ To obtain a list of all local maxima over both interior and boundary components 
 listMaxima([123,43,54,83,21,32,24,51])
 ```
 
+To replicate [Figure 1](#fig1) in this readme, run
+
+```
+sequence_length=1000
+x_values, y_values, categorical_results = generate_classification_plot_data(sequence_length, .01, .01, .99, .99, 300, 300, Hadamard_mode=true)
+make_classification_plot(sequence_length, x_values, y_values, categorical_results, Hadamard_mode=true)
+```
+
+This will save an .svg image of the plot to the working directory.
+
 # Additional documentation
 
-For more specific instructions (and examples) for using the estimation functions, see the function 
+For more information about the estimation functions, see the function 
 docstrings, for example by running
 
 ```
 @doc fourLeafMLE
 ```
 
-Additional detailed information about how to interpret the output of the estimation functions is also povided in 
+A detailed overview of how to interpret the output of the estimation functions is also povided in 
 [supplemental-documentation.pdf](https://github.com/max-hill/FourLeafMLE.jl/raw/main/supplemental-documentation.pdf)
 
 
@@ -115,7 +125,7 @@ theory of maximum likelihood (ML) degrees [10]. One feature
 distinguishing this software is that it implements a framework to
 characterize case when the tree estimates have infinite or zero-length
 branches. We believe this is useful in obtaining an understanding of
-ways that maximum likelihood inference can fail, and as a first step
+the ways that maximum likelihood inference can fail, and as a first step
 leads to [Figure 1](#fig1).
 
 # Running the maximum likelihood estimator
@@ -140,8 +150,8 @@ which has output
       "R1", 
       [1], 
       [0.1380874841, 0.46347429951, 0.5231552324, 0.3975875363, 0.6835395124], 
-      "θ1, θ2, θ3, θ4, θ5", 
-      "binary quartet with topology τ=1"]
+      "θ1, θ2, θ3, θ4, θ5",
+      "binary quartet with topology τ=12|34 and edge parameters (θ₁,...,θ₅) = (0.1380874841,...,0.6835395124)"]
 ```
 
 For complete details on the code, see the code documentation provided here, but now we
