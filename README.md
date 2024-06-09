@@ -46,14 +46,17 @@ To obtain a list of all local maxima over both interior and boundary components 
 listMaxima([123,43,54,83,21,32,24,51])
 ```
 
-For more detailed instructions (and examples) for using these
-functions, see the function docstrings, for example by running
+# Additional documentation
+
+For more specific instructions (and examples) for using the estimation functions, see the function 
+docstrings, for example by running
 
 ```
 @doc fourLeafMLE
 ```
 
-
+Additional detailed information about how to interpret the output of the estimation functions is also povided in 
+[supplemental-documentation.pdf](https://github.com/max-hill/FourLeafMLE.jl/raw/main/supplemental-documentation.pdf)
 
 
 # Background: tree topologies and the tree of life
